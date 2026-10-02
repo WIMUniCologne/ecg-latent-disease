@@ -1,0 +1,100 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite both this repository and the paper it
+  accompanies. The code is licensed under the GNU GPL, version 3 or later.
+title: >-
+  One ECG lead carries far more than atrial fibrillation (code)
+abstract: >-
+  Code, aggregated results and figures for a study of ECG encoders trained without
+  any diagnosis on open hospital recordings (MIMIC-IV-ECG) and read out frozen with
+  one logistic regression per finding. An autoencoder on the averaged heartbeat,
+  reproduced from Friedman et al. (2025), is compared with a masked autoencoder on
+  the whole ten-second strip, on a handheld single-lead device, on an external
+  twelve-lead cohort reduced to one, two and twelve leads, and on hospital diagnoses
+  of MIMIC-IV patients not seen in training. No ECG data, patient
+  records, trained weights or manuscript are included.
+type: software
+version: 1.0.0
+date-released: 2026-10-01
+authors:
+  - given-names: Tim
+    family-names: Rahlmeier
+    affiliation: Cologne Institute for Information Systems (CIIS), University of Cologne
+    email: rahlmeier@wim.uni-koeln.de
+license: GPL-3.0-or-later
+repository-code: https://github.com/WIMUniCologne/ecg-latent-disease
+keywords:
+  - electrocardiogram
+  - self-supervised learning
+  - representation learning
+  - wearables
+  - single-lead ECG
+  - atrial fibrillation
+  - reproducibility
+references:
+  - type: article
+    title: >-
+      Unsupervised deep learning of electrocardiograms enables scalable human
+      disease profiling
+    authors:
+      - family-names: Friedman
+        given-names: Samuel F.
+    journal: npj Digital Medicine
+    volume: 8
+    start: 23
+    year: 2025
+    notes: The unsupervised median-beat autoencoder architecture reproduced here.
+  - type: software
+    title: "ml4h: Machine Learning for Health toolkit"
+    authors:
+      - name: Broad Institute
+    repository-code: https://github.com/broadinstitute/ml4h
+    license: GPL-3.0
+    notes: Reference implementation; the autoencoder here is an independent reimplementation of its architecture.
+  - type: data
+    title: MIMIC-IV-ECG
+    authors:
+      - family-names: Gow
+        given-names: Brian
+    year: 2023
+    notes: PhysioNet, credentialed access under the Data Use Agreement; not redistributed.
+  - type: data
+    title: MIMIC-IV
+    authors:
+      - family-names: Johnson
+        given-names: Alistair E. W.
+    year: 2024
+    notes: PhysioNet, credentialed access under the Data Use Agreement; hosp module v3.1 for age, sex, race, admissions and ICD-coded diagnoses; not redistributed.
+  - type: data
+    title: "AF classification from a short single lead ECG recording: the PhysioNet/CinC Challenge 2017"
+    authors:
+      - family-names: Clifford
+        given-names: Gari D.
+    year: 2017
+    notes: PhysioNet; handheld single-lead atrial fibrillation.
+  - type: data
+    title: "A large scale 12-lead electrocardiogram database for arrhythmia study (version 1.0.0)"
+    authors:
+      - family-names: Zheng
+        given-names: Jianwei
+      - family-names: Guo
+        given-names: Hangyuan
+      - family-names: Chu
+        given-names: Huimin
+    year: 2022
+    doi: 10.13026/wgex-er52
+    notes: PhysioNet ecg-arrhythmia (Chapman-Shaoxing and Ningbo); the external cohort of 13 findings.
+  - type: data
+    title: "Icentia11k single-lead continuous raw electrocardiogram dataset"
+    authors:
+      - family-names: Tan
+        given-names: Shawn
+    year: 2019
+    notes: PhysioNet; adhesive-patch single lead.
+  - type: data
+    title: MIT-BIH Noise Stress Test Database
+    authors:
+      - family-names: Moody
+        given-names: George B.
+    year: 1984
+    notes: PhysioNet nstdb; real recorded noise for the robustness analysis.

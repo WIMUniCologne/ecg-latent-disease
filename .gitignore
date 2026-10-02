@@ -1,0 +1,90 @@
+# ============================================================================
+#  Default-deny publication policy.
+#
+#  Nothing in this repository is tracked unless it is explicitly allowed below,
+#  so datasets, caches, decoded waveforms, trained weights and run logs can never
+#  be committed by accident.
+#
+#  MIMIC-IV-ECG is credentialed data under the PhysioNet Data Use Agreement and
+#  must never be redistributed, not even in derived per-record form.
+# ============================================================================
+
+# 1) ignore everything at the repository root
+/*
+
+# 2) project metadata, licences, citation, environment
+!/.gitignore
+!/README.md
+!/LICENSE
+!/LICENSE-FIGURES
+!/NOTICE
+!/CITATION.cff
+!/requirements.txt
+!/environment.yml
+!/pytest.ini
+!/train.py
+
+# 3) source-code directories
+!/models/
+!/data/
+!/experiments/
+!/tests/
+!/figures/
+
+# 4) global excludes, defence in depth: no data, caches, weights or build output
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+*.log
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.pkl
+*.pt
+*.pth
+*.ckpt
+*.keras
+*.dat
+*.hea
+*.atr
+*.mat
+*.rda
+*.pdf
+*.html
+*.zip
+*.gz
+*.tar
+.env
+.env.*
+*.key
+credentials*
+.DS_Store
+Thumbs.db
+
+# ============================================================================
+#  5) aggregated results the paper is built from
+#
+#  AUCs, confidence intervals, P values and cohort counts per finding and per
+#  analysis arm. They contain no waveforms and no patient records, and they let
+#  anyone redraw every figure without access to the credentialed data. The one
+#  per-record file is the handheld one: out-of-fold probabilities for the openly
+#  licensed PhysioNet/CinC 2017 recordings, keyed by their public record names.
+# ============================================================================
+!/experiments/stats/
+/experiments/stats/*
+!/experiments/stats/*.csv
+!/experiments/stats/handheld_oof_fixfs.npz
+
+# ============================================================================
+#  6) the figures of the paper and the scripts that draw them
+# ============================================================================
+/figures/*
+!/figures/*.py
+!/figures/*.png
+!/figures/fig1_overview.pdf

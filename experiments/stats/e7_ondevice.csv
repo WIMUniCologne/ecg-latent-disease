@@ -1,0 +1,2 @@
+model,parameters,parameters_millions,parameters_with_decoder,size_mb,cpu_latency_ms_median,cpu_latency_ms_p90,threads,batch,input_length
+single-lead strip encoder (ConvMAE1D encoder),1600512,1.601,3306817,6.119,3.14,3.35,1,1,1024
