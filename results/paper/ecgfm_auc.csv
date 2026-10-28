@@ -1,0 +1,2 @@
+task,readout,n,n_pos,auc,ci_lo,ci_hi,shuffled,seed
+af_vs_normal,ecg_fm,5834,758,0.9828797528230526,0.9777289355263964,0.9880305701197089,0.4942657879908764,-1

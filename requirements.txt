@@ -1,0 +1,37 @@
+# Python packages for ecg-latent-disease, pinned to the versions the results were
+# computed with (Python 3.12.4, Linux x86_64, NVIDIA RTX 4090, driver 555.42.02).
+#
+#   pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+#   pip install -r requirements.txt
+#
+# Install PyTorch first from the CUDA 12.4 wheel index as shown: a plain `pip install
+# torch` pulls a build for a newer CUDA that older drivers cannot run. On a machine
+# without a GPU, use --index-url https://download.pytorch.org/whl/cpu instead;
+# training is then very slow, but evaluation and the tests run.
+
+torch==2.6.0
+
+# ECG input and signal processing
+wfdb==4.3.1               # WFDB records (.dat/.hea)
+biosppy==2.2.4            # R-peak detection for the averaged beat, as in the reference code
+peakutils==1.3.5          # required by biosppy at run time
+
+# scientific stack
+numpy==2.1.2
+scipy==1.14.1
+pandas==2.3.3
+scikit-learn==1.5.2
+statsmodels==0.14.6       # Benjamini-Hochberg FDR correction in oof_stats.py
+joblib==1.4.2             # runs the per-finding cross-validation jobs in parallel
+h5py==3.16.0              # preprocessed caches
+matplotlib==3.11.0        # figures
+
+pyreadr==0.5.7            # reads the Phecode map (R data) in data/build_phecode_lookup.py
+
+# tests
+pytest==9.1.1
+neurokit2==0.2.13         # simulated ECGs with known R peaks for two tests
+
+# optional: only for checking the preprocessing against the published reference
+# weights (data/validate_reference_roundtrip.py); the tests skip it when absent
+# keras>=3

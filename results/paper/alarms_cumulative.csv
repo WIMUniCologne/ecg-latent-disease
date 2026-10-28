@@ -1,0 +1,121 @@
+lead_set,seed,population,groups_added,n_findings,share_any
+1,0,no_finding,rhythm,5,0.29808558558558557
+1,0,no_finding,rhythm + conduction_axis,8,0.5704954954954955
+1,0,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.6684684684684684
+1,0,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.7914414414414415
+1,0,sinus_rhythm_only,rhythm,5,0.26526458616010856
+1,0,sinus_rhythm_only,rhythm + conduction_axis,8,0.5532564450474898
+1,0,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.6538331071913162
+1,0,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.7747625508819539
+1,1,no_finding,rhythm,5,0.31182432432432433
+1,1,no_finding,rhythm + conduction_axis,8,0.6099099099099099
+1,1,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.7115990990990991
+1,1,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.8275900900900901
+1,1,sinus_rhythm_only,rhythm,5,0.27137042062415195
+1,1,sinus_rhythm_only,rhythm + conduction_axis,8,0.5859905020352781
+1,1,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.6967435549525102
+1,1,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.8190298507462687
+1,2,no_finding,rhythm,5,0.3141891891891892
+1,2,no_finding,rhythm + conduction_axis,8,0.5988738738738739
+1,2,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.703490990990991
+1,2,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.7592342342342342
+1,2,sinus_rhythm_only,rhythm,5,0.28426051560379917
+1,2,sinus_rhythm_only,rhythm + conduction_axis,8,0.5861601085481682
+1,2,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.6948778833107191
+1,2,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.7477951153324288
+1,3,no_finding,rhythm,5,0.34695945945945944
+1,3,no_finding,rhythm + conduction_axis,8,0.6301801801801802
+1,3,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.7136261261261261
+1,3,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.8538288288288288
+1,3,sinus_rhythm_only,rhythm,5,0.3168249660786974
+1,3,sinus_rhythm_only,rhythm + conduction_axis,8,0.621268656716418
+1,3,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.7096336499321574
+1,3,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.8622795115332429
+1,4,no_finding,rhythm,5,0.31722972972972974
+1,4,no_finding,rhythm + conduction_axis,8,0.5961711711711711
+1,4,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.7132882882882883
+1,4,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.8478603603603604
+1,4,sinus_rhythm_only,rhythm,5,0.28527815468113976
+1,4,sinus_rhythm_only,rhythm + conduction_axis,8,0.580393487109905
+1,4,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.7004748982360922
+1,4,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.8448100407055631
+2,0,no_finding,rhythm,5,0.3043918918918919
+2,0,no_finding,rhythm + conduction_axis,8,0.44538288288288286
+2,0,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5561936936936936
+2,0,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.6352477477477477
+2,0,sinus_rhythm_only,rhythm,5,0.276797829036635
+2,0,sinus_rhythm_only,rhythm + conduction_axis,8,0.4106173677069199
+2,0,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5271370420624152
+2,0,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.6007462686567164
+2,1,no_finding,rhythm,5,0.2743243243243243
+2,1,no_finding,rhythm + conduction_axis,8,0.40822072072072074
+2,1,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5306306306306307
+2,1,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.6163288288288288
+2,1,sinus_rhythm_only,rhythm,5,0.24202849389416553
+2,1,sinus_rhythm_only,rhythm + conduction_axis,8,0.36092265943012214
+2,1,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.48846675712347354
+2,1,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5758141112618724
+2,2,no_finding,rhythm,5,0.23783783783783785
+2,2,no_finding,rhythm + conduction_axis,8,0.3869369369369369
+2,2,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5057432432432433
+2,2,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5876126126126127
+2,2,sinus_rhythm_only,rhythm,5,0.1960651289009498
+2,2,sinus_rhythm_only,rhythm + conduction_axis,8,0.32869742198100405
+2,2,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.44827001356852103
+2,2,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5262890094979648
+2,3,no_finding,rhythm,5,0.2779279279279279
+2,3,no_finding,rhythm + conduction_axis,8,0.3903153153153153
+2,3,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5364864864864864
+2,3,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.642454954954955
+2,3,sinus_rhythm_only,rhythm,5,0.246438263229308
+2,3,sinus_rhythm_only,rhythm + conduction_axis,8,0.3415875169606513
+2,3,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.4974559023066486
+2,3,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5990502035278155
+2,4,no_finding,rhythm,5,0.2890765765765766
+2,4,no_finding,rhythm + conduction_axis,8,0.41396396396396395
+2,4,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5376126126126126
+2,4,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.578490990990991
+2,4,sinus_rhythm_only,rhythm,5,0.27204884667571233
+2,4,sinus_rhythm_only,rhythm + conduction_axis,8,0.37974898236092264
+2,4,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5086499321573948
+2,4,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5473202170963365
+12,0,no_finding,rhythm,5,0.2507882882882883
+12,0,no_finding,rhythm + conduction_axis,8,0.3738738738738739
+12,0,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.48502252252252254
+12,0,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5399774774774775
+12,0,sinus_rhythm_only,rhythm,5,0.21811397557666215
+12,0,sinus_rhythm_only,rhythm + conduction_axis,8,0.332089552238806
+12,0,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.4331750339213026
+12,0,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.48236092265943015
+12,1,no_finding,rhythm,5,0.24752252252252252
+12,1,no_finding,rhythm + conduction_axis,8,0.3675675675675676
+12,1,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.4800675675675676
+12,1,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.629054054054054
+12,1,sinus_rhythm_only,rhythm,5,0.21879240162822253
+12,1,sinus_rhythm_only,rhythm + conduction_axis,8,0.324966078697422
+12,1,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.4294436906377205
+12,1,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5751356852103121
+12,2,no_finding,rhythm,5,0.27004504504504506
+12,2,no_finding,rhythm + conduction_axis,8,0.4337837837837838
+12,2,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5512387387387387
+12,2,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.613063063063063
+12,2,sinus_rhythm_only,rhythm,5,0.2327001356852103
+12,2,sinus_rhythm_only,rhythm + conduction_axis,8,0.3877204884667571
+12,2,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.4998303934871099
+12,2,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5566485753052918
+12,3,no_finding,rhythm,5,0.2719594594594595
+12,3,no_finding,rhythm + conduction_axis,8,0.4088963963963964
+12,3,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.5157657657657657
+12,3,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5586711711711712
+12,3,sinus_rhythm_only,rhythm,5,0.24287652645861602
+12,3,sinus_rhythm_only,rhythm + conduction_axis,8,0.36448439620081413
+12,3,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.4637042062415197
+12,3,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5044097693351425
+12,4,no_finding,rhythm,5,0.24977477477477478
+12,4,no_finding,rhythm + conduction_axis,8,0.36058558558558557
+12,4,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.4832207207207207
+12,4,no_finding,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.6110360360360361
+12,4,sinus_rhythm_only,rhythm,5,0.22099728629579377
+12,4,sinus_rhythm_only,rhythm + conduction_axis,8,0.31241519674355495
+12,4,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI,12,0.4314789687924016
+12,4,sinus_rhythm_only,rhythm + conduction_axis + structural_ischaemic_noMI + myocardial_infarction,13,0.5658073270013568

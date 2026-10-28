@@ -1,0 +1,25 @@
+Figures license
+===============
+
+The figure image files in figures/ (the graphics that appear in the paper) are:
+
+    Copyright 2026 Tim Rahlmeier (University of Cologne)
+    Licensed under the Creative Commons Attribution 4.0 International License
+    (CC BY 4.0).
+
+You are free to share and adapt these figures for any purpose, including
+commercially, as long as you give appropriate credit (cite the work; see
+CITATION.cff), provide a link to the license, and indicate if changes were made.
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+
+Note: these figures are aggregate statistical plots and one schematic whose
+waveforms are drawn, not recorded. They contain no individual patient records.
+They are derived in part from analyses of MIMIC-IV-ECG (credentialed data); the
+aggregated results they are drawn from are included in results/paper/ and
+experiments/stats/, the
+per-patient data and intermediate files are not (see NOTICE and README).
+
+The source code that generates these figures is licensed separately under the
+GNU General Public License, version 3 or later (see LICENSE).

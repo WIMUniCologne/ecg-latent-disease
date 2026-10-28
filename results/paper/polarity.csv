@@ -1,0 +1,4 @@
+part,cohort,n,n_unexplained,flipped,flip_rate,n_unusable,inverted,turned_back_by_rule
+a,external (Chapman-Shaoxing and Ningbo),44899,0.0,4050.0,0.09020245439764805,,,
+a,MIMIC hospital-diagnosis cohort,31580,,1505.0,0.04765674477517416,30.0,,
+b,handheld,5834,,,,,2917.0,1.0

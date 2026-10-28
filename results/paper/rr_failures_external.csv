@@ -1,0 +1,15 @@
+task,n,few_peaks,errors,seconds_min,seconds_max
+all,44899,6,0,10.0,10.0
+atrial_fibrillation,9803,2,0,,
+myocardial_infarction,122,0,0,,
+conduction_disorder,3020,1,0,,
+structural_hyp,766,0,0,,
+sinus_bradycardia,16504,0,0,,
+sinus_tachycardia,7211,0,0,,
+supraventricular_tachycardia,680,0,0,,
+atrial_premature_beats,1310,0,0,,
+t_wave_abnormality,8534,2,0,,
+st_changes,3335,0,0,,
+abnormal_q_wave,1063,0,0,,
+prolonged_qt,390,0,0,,
+left_axis_deviation,1537,0,0,,

@@ -1,0 +1,2 @@
+design,input_length,encoder_parameters,encoder_mb_float32,latency_ms_median_1thread
+r256_w128,2560,15770368,63.081472,95.28733533807099

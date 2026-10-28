@@ -1,0 +1,5 @@
+metric,value
+mean_recon_corr,0.995
+median_recon_corr,0.9994
+p10_recon_corr,0.9933
+n,318.0

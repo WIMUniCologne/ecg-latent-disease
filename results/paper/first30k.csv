@@ -1,0 +1,7 @@
+item,value
+record list sorted by subject_id,True
+record list sorted by time within each subject,True
+"first 30,000: patients",6169
+"first 30,000: records per patient",4.863024801426487
+"first 30,000: patients with only part of their records included (cut by the limit)",1
+whole database: records per patient,4.958320938073281
