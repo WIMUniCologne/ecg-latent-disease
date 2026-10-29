@@ -314,7 +314,7 @@ All files are in `results/paper/` unless a folder is named. Files ending in `_pe
 | Table 2, Fig. 3, Suppl. Table S17 | `handheld_auc`, `handheld_summary`, `handheld_diffs`, `handheld_utility`, `table1_handheld` | `handheld_final.py`, `extras_final.py table1` |
 | Fig. 4a | `handheld_oof.npz` | `handheld_final.py` |
 | Fig. 4b, Suppl. Table S21 | `alarms_frontier`, `alarms_burden`, `alarms_per_finding`, `alarms_threshold_transfer`, `alarms_contribution`, `alarms_cumulative` | `secondary_final.py alarms`, `supplement_final.py cumulative` |
-| Fig. 5, Suppl. Table S23 | `hospital_noise`, `hospital_noise_s*`, `noise13`, `noise13_per_seed` | `hospital_final.py`, `supplement_final.py noise13` |
+| Fig. 5, Suppl. Table S24 | `hospital_noise`, `hospital_noise_s*`, `noise13`, `noise13_per_seed` | `hospital_final.py`, `supplement_final.py noise13` |
 | Suppl. Table S1 | `controls` | `extras_final.py controls` |
 | Suppl. Table S6 | `pair_v5_auc`, `pair_v5_groups`, `pair_v5_diffs` | `pair_v5_final.py eval` |
 | Suppl. Table S7 | `auprc_per_finding`, `rates_auprc_summary` | `secondary_final.py rates` |
@@ -327,10 +327,10 @@ All files are in `results/paper/` unless a folder is named. Files ending in `_pe
 | Suppl. Table S18 | `handheld_length_auc`, `handheld_length_summary`, `handheld_length_diffs`, `handheld_length_inputs` | `handheld_final.py length20` |
 | Suppl. Table S19 | `ecgfm_auc`, `ecgfm_diffs` | `extras_final.py ecgfm` |
 | Suppl. Table S20 | `handheld_af_vs_all`, `handheld_af_vs_all_fp_classes`, `handheld_ppv`, `handheld_net_benefit` | `extras_final.py handheld` |
-| Suppl. Table S22 | `hospital_diagnoses`, `hospital_diagnoses_per_seed` | `hospital_final.py` |
-| Suppl. Table S24 | `handheld_tasks` | `extras_final.py tasks` |
-| Suppl. Table S25 | `hypertrophy_split` | `supplement_final.py hypertrophy` |
-| Suppl. Table S26, Suppl. Fig. S2 | `calibration`, `calibration_curves`, `calibration_per_seed`, `recalibration` | `extras_final.py calibration`, `recal` |
+| Suppl. Table S23 | `hospital_diagnoses`, `hospital_diagnoses_per_seed` | `hospital_final.py` |
+| Suppl. Table S25 | `handheld_tasks` | `extras_final.py tasks` |
+| Suppl. Table S26 | `hypertrophy_split` | `supplement_final.py hypertrophy` |
+| Suppl. Table S22, Suppl. Fig. S2 | `calibration`, `calibration_curves`, `calibration_per_seed`, `recalibration` | `extras_final.py calibration`, `recal` |
 | Suppl. Table S27 | `handheld_duplicates` | `extras_final.py handheld` |
 | Suppl. Table S28 | `upright_external`, `polarity`, `handheld_orientation` | `extras_final.py upright`, `describe_data.py` |
 | Suppl. Table S29, Suppl. Fig. S3 | `experiments/stats/cohorts`, `experiments/stats/cohort_flow` | `cohort_tables.py` |
