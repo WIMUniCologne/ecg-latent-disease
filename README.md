@@ -1,18 +1,70 @@
 # Lead I alone carries much of what physicians read on a 12-lead ECG
 
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
+[![Figures: CC BY 4.0](https://img.shields.io/badge/figures-CC%20BY%204.0-lightgrey.svg)](LICENSE-FIGURES)
+![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
+![PyTorch 2.6](https://img.shields.io/badge/PyTorch-2.6-orange.svg)
+
 Code, aggregated results and figures for the study *"Lead I alone carries much of what
-physicians read on a 12-lead ECG"* by Tim Rahlmeier (University of Cologne).
+physicians read on a 12-lead ECG"* by Tim Rahlmeier and Detlef Schoder (Cologne Institute for
+Information Systems, University of Cologne).
 
 Cardiologists read many findings from 12-lead electrocardiograms, whereas consumer devices
-record one lead and classify its rhythm. We pre-train neural networks with self-supervised
-learning on unlabelled MIMIC-IV-ECG recordings, keep them frozen, and read each finding from
-their representation with one logistic regression. The main encoder is a masked autoencoder on
-the whole ten-second strip (2,560 samples at 256 Hz) of one, two or twelve leads; an
-autoencoder on the averaged heartbeat, reproduced from Friedman et al. (2025), is the comparison.
-The representations are tested against 13 physician-annotated findings in 44,899 twelve-lead
-recordings from two hospitals in China (Chapman–Shaoxing and Ningbo) and in 18,868 from Germany
-(PTB-XL), on atrial fibrillation in 5,834 handheld single-lead recordings (PhysioNet/CinC 2017),
-and on 11 hospital diagnoses of 31,580 MIMIC-IV patients that no encoder saw in pre-training.
+record one lead and classify only its rhythm. How much diagnostic information does this single
+lead carry? We pre-train neural networks with self-supervised learning on unlabelled
+MIMIC-IV-ECG recordings, keep them frozen, and read each finding from their representation with
+one logistic regression. The main encoder is a masked autoencoder on the whole ten-second strip
+(2,560 samples at 256 Hz) of one, two or twelve leads; an autoencoder on the averaged heartbeat,
+reproduced from Friedman et al. (2025), is the comparison. The representations are tested
+against 13 physician-annotated findings in 44,899 twelve-lead recordings from two hospitals in
+China (Chapman–Shaoxing and Ningbo) and in 18,868 from Germany (PTB-XL), on atrial fibrillation
+in 5,834 handheld single-lead recordings (PhysioNet/CinC 2017), and on 11 hospital diagnoses of
+31,580 MIMIC-IV patients that no encoder saw in pre-training.
+
+![Study overview](figures/fig1.png)
+
+*Study overview (Fig. 1 of the paper). The encoder is pre-trained without labels on the averaged
+beat or on the strip, then frozen; one logistic regression per finding is fitted on its
+representation. The waveforms and devices are drawn for illustration.*
+
+## Key results
+
+| Mean AUC over the findings | Lead I | Leads I and II | Twelve leads |
+|---|---|---|---|
+| First external cohort, 13 findings (Chapman–Shaoxing and Ningbo) | 0.883 | 0.928 | 0.940 |
+| Second external cohort, 12 findings (PTB-XL) | 0.838 | 0.886 | 0.897 |
+
+- **Atrial fibrillation on a handheld device** (lead I): RR intervals 0.977, strip 0.971, both
+  combined 0.987.
+- **Cost of a broad reading:** at a sensitivity of 0.90 for every finding, lead-I classifiers
+  flagged 82% of the recordings of the first cohort that had none of the 13 findings.
+
+Values are means over training runs. Confidence intervals and every comparison are in
+`results/paper/` (see [Where each result lives](#where-each-result-lives)).
+
+## Quick start (no data needed)
+
+```bash
+pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu   # or the CUDA wheel, see Environment
+pip install -r requirements.txt
+python figures/make_figures.py      # redraws the eight figures of the paper from results/paper/
+pytest -q                           # unit tests on synthetic signals
+```
+
+## Contents
+
+[What is in this repository](#what-is-in-this-repository) ·
+[Code map](#code-map) ·
+[Environment](#environment) ·
+[Data](#data) ·
+[Redraw the figures](#redraw-the-figures-no-data-needed) ·
+[Tests](#tests) ·
+[Running the analysis](#running-the-analysis) ·
+[Where each result lives](#where-each-result-lives) ·
+[Statistical protocol](#statistical-protocol) ·
+[Reproducibility](#reproducibility) ·
+[Model weights](#model-weights) ·
+[Licence and citation](#licence-and-citation)
 
 ## What is in this repository
 
@@ -378,4 +430,13 @@ pre-train them again with this code.
 Code: GNU General Public License, version 3 or later (`LICENSE`). Figures: CC BY 4.0 (`LICENSE-FIGURES`).
 `NOTICE` lists the third-party work this code builds on; the averaged-beat autoencoder
 reproduces the architecture of Friedman et al. (2025) and the Broad Institute ml4h toolkit.
-If you use this code, please cite the paper and this repository (`CITATION.cff`).
+If you use this code, please cite the paper and this repository (`CITATION.cff`):
+
+```bibtex
+@article{rahlmeier2026leadI,
+  author = {Rahlmeier, Tim and Schoder, Detlef},
+  title  = {Lead {I} alone carries much of what physicians read on a 12-lead {ECG}},
+  year   = {2026},
+  note   = {Manuscript submitted for publication}
+}
+```

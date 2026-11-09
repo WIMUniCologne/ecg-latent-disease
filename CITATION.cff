@@ -24,6 +24,21 @@ authors:
     email: rahlmeier@wim.uni-koeln.de
 license: GPL-3.0-or-later
 repository-code: https://github.com/WIMUniCologne/ecg-latent-disease
+preferred-citation:
+  type: article
+  title: >-
+    Lead I alone carries much of what physicians read on a 12-lead ECG
+  authors:
+    - given-names: Tim
+      family-names: Rahlmeier
+      affiliation: Cologne Institute for Information Systems (CIIS), University of Cologne
+      email: rahlmeier@wim.uni-koeln.de
+    - given-names: Detlef
+      family-names: Schoder
+      affiliation: Cologne Institute for Information Systems (CIIS), University of Cologne
+      email: schoder@wim.uni-koeln.de
+  year: 2026
+  status: submitted
 keywords:
   - electrocardiogram
   - self-supervised learning
