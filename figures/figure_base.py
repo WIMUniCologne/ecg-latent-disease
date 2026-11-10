@@ -36,6 +36,10 @@ W_FULL = 5.15
 C_GREY, C_DARK = "#999999", "#4d4d4d"
 C_ORANGE, C_BLUE, C_NAVY = "#e58a2b", "#2a78b8", "#173f73"
 C_PURPLE = "#8a63b3"
+# the one colour dictionary of all main and supplementary figures
+COLORS = {"lead1": C_BLUE, "leads2": C_NAVY, "twelve": C_DARK, "strip": C_BLUE, "beat": C_ORANGE, "rr": C_DARK, "rr_strip": C_PURPLE,
+          "patch": C_PURPLE, "frozen": C_BLUE, "finetuned": C_NAVY, "supervised": C_ORANGE,
+          "noise_bw": C_DARK, "noise_ma": C_BLUE, "noise_em": C_ORANGE, "noise_all": C_NAVY}
 
 
 # --------------------------------------------------------------------------- #

@@ -7,7 +7,7 @@ MIMIC averaged beat,"beat in at least one lead, lead I, device path",29850
 MIMIC strips,records drawn at random from the record list (seed 0),300000
 MIMIC strips,"finite, non-flat lead I",299425
 Controlled comparison,records of the 98k corpus,98000
-Controlled comparison,clean averaged beat from the same strip,97736
+Controlled comparison,clean averaged beat from the same strip,97786
 MIMIC hospital diagnoses,"patients outside every pre-training corpus, most recent recording",52542
 MIMIC hospital diagnoses,hospital encounter (emergency department or admission) at or before the recording,31610
 MIMIC hospital diagnoses,age and sex available,31610

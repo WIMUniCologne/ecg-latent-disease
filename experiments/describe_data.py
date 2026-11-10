@@ -9,6 +9,9 @@
                                   of the MIMIC-IV-ECG record list, patients and recordings per patient
   averaged_beat_training_counts.csv  recordings used for training and held out, per averaged-beat
                                   encoder of the lead-set comparison and run (from runs/*/config.json)
+  averaged_beat_training_counts_other.csv  the same for the other averaged-beat encoders: the one read on
+                                  the handheld device, the single detection on lead II and the single leads
+  ptbxl_flow.csv                  PTB-XL recordings, those with Challenge labels, and the patients kept
   af_codes_by_hospital.csv        atrial fibrillation (164889003) and atrial flutter (164890007) codes
                                   per hospital of the first external cohort
   st_elevation_code.csv           recordings whose only code among the ST changes is ST elevation
@@ -93,6 +96,34 @@ def beat_counts():
             rows.append(dict(arm=arm, run=r, n_items=c["n_items"], n_train=c["n_train"], n_val=c["n_val"],
                              val_frac=c["val_frac"]))
     pd.DataFrame(rows).to_csv(out("averaged_beat_training_counts.csv"), index=False)
+
+
+def beat_counts_other():
+    """The other averaged-beat encoders, one row per trained encoder (runs/*/config.json)."""
+    import glob
+    import json
+    specs = [("handheld_beat", "fixfs_dev_lead_00_I"), ("single_detection_two", "sharedII_lead_combo_I_II*"),
+             ("single_detection_twelve", "sharedII_run_ref256*")]
+    specs += [(f"single_lead_{a}", f"{pre}lead_[01][0-9]_*") for a, pre in (("published", ""), ("corrected", "fixfs_"), ("lead_II", "sharedII_"))]
+    rows = []
+    for arm, pat in specs:
+        for d in sorted(glob.glob(os.path.join(cm.REPO, "runs", pat))):
+            c = json.load(open(os.path.join(d, "config.json")))
+            assert c["n_train"] + c["n_val"] == c["n_items"], d
+            rows.append(dict(arm=arm, encoder=os.path.basename(d), run=int(c["seed"]), n_items=c["n_items"], n_train=c["n_train"],
+                             n_val=c["n_val"], val_frac=c["val_frac"]))
+    pd.DataFrame(rows).to_csv(out("averaged_beat_training_counts_other.csv"), index=False)
+
+
+def ptbxl_flow():
+    """How many PTB-XL recordings have Challenge labels, and how many patients remain."""
+    import glob
+    import ptbxl_final as pf
+    db = pd.read_csv(os.path.join(pf.PTBXL, "ptbxl_database.csv"), usecols=["ecg_id", "patient_id"])
+    ids = [pf._header(f)[0] for f in sorted(glob.glob(os.path.join(pf.CHALLENGE, "g*", "HR*.hea")))]
+    m = db[db.ecg_id.isin(ids)]
+    pd.DataFrame([dict(step="recordings in the database", n=len(db)), dict(step="with labels of the Challenge", n=len(m)),
+                  dict(step="earliest recording of every patient", n=int(m.patient_id.nunique()))]).to_csv(out("ptbxl_flow.csv"), index=False)
 
 
 def codes():
@@ -216,6 +247,6 @@ def polarity():
 
 
 if __name__ == "__main__":
-    for f in (first30k, beat_counts, codes, rr_failures, polarity):
+    for f in (first30k, beat_counts, beat_counts_other, ptbxl_flow, codes, rr_failures, polarity):
         f()
         print("done", f.__name__, flush=True)

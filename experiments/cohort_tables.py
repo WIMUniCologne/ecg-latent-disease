@@ -116,7 +116,7 @@ def main():
     for n in SCALE_SIZES:
         rows.append(describe(sel(shuffled_subset(k98, n)), f"MIMIC lead-I strips, subset of {n:,}",
                              "nested random subset of the 98k corpus, seed 0"))
-    abl = keys(cache_path("ablation_strip_1024_fixfs.h5"), "strips")
+    abl = keys(cache_path("ablation_strip_2560.h5"), "strips")       # the corpus at 256 Hz, as in the paper
     rows.append(describe(sel(abl), "MIMIC corpus of the controlled comparison",
                          "identical records as strips and as averaged beats"))
     flow += [dict(cohort="Controlled comparison", step="records of the 98k corpus", n=len(k98)),
