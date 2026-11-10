@@ -82,7 +82,6 @@ Thumbs.db
 /results/paper/*
 !/results/paper/*.csv
 !/results/paper/handheld_oof.npz
-!/results/paper/fig1_example_ptbxl.npz
 !/experiments/stats/
 /experiments/stats/*
 !/experiments/stats/*.csv
@@ -92,6 +91,5 @@ Thumbs.db
 # ============================================================================
 /figures/*
 !/figures/*.py
-!/figures/*.mplstyle
 !/figures/fig*.png
 !/figures/fig*.pdf

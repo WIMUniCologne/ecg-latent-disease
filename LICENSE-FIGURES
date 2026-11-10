@@ -14,9 +14,8 @@ CITATION.cff), provide a link to the license, and indicate if changes were made.
 Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
 Human-readable summary: https://creativecommons.org/licenses/by/4.0/
 
-Note: these figures are aggregate statistical plots and one overview. The overview
-shows the signals of one openly licensed PTB-XL recording (CC BY 4.0; Wagner et al.,
-Scientific Data 7, 154, 2020). They contain no other individual patient records.
+Note: these figures are aggregate statistical plots and one schematic whose
+waveforms are drawn, not recorded. They contain no individual patient records.
 They are derived in part from analyses of MIMIC-IV-ECG (credentialed data); the
 aggregated results they are drawn from are included in results/paper/ and
 experiments/stats/, the

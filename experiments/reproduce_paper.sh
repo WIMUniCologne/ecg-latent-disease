@@ -226,7 +226,6 @@ if want ptbxl; then
   python experiments/ptbxl_final.py folds          # AUC per outer fold; checks the recomputed AUCs
   python experiments/ptbxl_final.py validation
   python experiments/extras_final.py cohort_ptbxl
-  python experiments/fig1_example.py               # signals of one recording for the overview figure
 fi
 
 if want comparators; then

@@ -12,9 +12,8 @@ abstract: >-
   twelve-lead cohorts (Chapman-Shaoxing and Ningbo; PTB-XL), on atrial fibrillation
   in handheld single-lead recordings, and on hospital diagnoses of MIMIC-IV patients
   not seen in pre-training; an autoencoder on the averaged heartbeat, reproduced from
-  Friedman et al. (2025), is the comparison. Apart from one openly licensed example
-  recording for Fig. 1, no ECG data or patient records are included; trained weights
-  and the manuscript are not included either.
+  Friedman et al. (2025), is the comparison. No ECG data, patient records, trained
+  weights or manuscript are included.
 type: software
 version: 2.0.0
 date-released: 2026-10-28
