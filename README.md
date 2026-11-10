@@ -25,7 +25,7 @@ in 5,834 handheld single-lead recordings (PhysioNet/CinC 2017), and on 11 hospit
 
 *Study overview (Fig. 1 of the paper). The encoder is pre-trained without labels on the averaged
 beat or on the strip, then frozen; one logistic regression per finding is fitted on its
-representation. The waveforms and devices are drawn for illustration.*
+representation. The signals are examples from one openly licensed PTB-XL recording.*
 
 ## Key results
 
@@ -70,7 +70,7 @@ pytest -q                           # unit tests on synthetic signals
 
 | Included | Not included |
 |---|---|
-| all code for preprocessing, pre-training, evaluation and statistics | any ECG data or patient records |
+| all code for preprocessing, pre-training, evaluation and statistics | ECG data or patient records (except one open PTB-XL recording for Fig. 1) |
 | the aggregated results behind every table and figure (`results/paper/`, `experiments/stats/`) | preprocessed caches, representations and predictions |
 | the figures and the script that draws them (`figures/`) | trained model weights (see below) |
 | unit tests with negative controls (`tests/`) | the manuscript |
@@ -79,7 +79,8 @@ The result tables hold AUCs, confidence intervals, P values and counts per findi
 analysis; they contain no waveforms and no patient-level information. The one per-record file,
 `results/paper/handheld_oof.npz`, holds the reference labels and out-of-fold probabilities for
 the openly licensed PhysioNet/CinC 2017 recordings, without record names, for the ROC curves of
-Fig. 4.
+Fig. 4. `results/paper/fig1_example_ptbxl.npz` holds the signals of one openly licensed PTB-XL
+recording (CC BY 4.0), without its record name, for the example signals of Fig. 1.
 
 ```
 data/               loading, preprocessing (averaged beat, strips), labels, cache builders
@@ -138,6 +139,7 @@ train.py            training entry point for the averaged-beat autoencoder
 | `comparators_final.py`, `e2b_ecgfm.py` | networks trained with the labels, the fine-tuned encoder, ECG-FM |
 | `secondary_final.py`, `supplement_final.py`, `extras_final.py` | the further analyses of the external cohort and the handheld device |
 | `describe_data.py`, `cohort_tables.py`, `pairing_corpus_count.py` | counts of the data and cohorts |
+| `fig1_example.py` | the signals of one PTB-XL recording for Fig. 1 |
 | `perlead_ranking.py`, `beat_latents.py`, `seed_stability_report.py` | ranking of the twelve single-lead averaged-beat encoders (Supplementary Table S32) |
 | `c2_published_encode.py` | representations from the published averaged-beat encoder of Friedman et al. (Supplementary Table S14) |
 | `reproduce_paper.sh`, `train_rpeak_arms.sh`, `train_seed_stability.sh` | the run scripts |
@@ -148,7 +150,8 @@ Further modules (`ablation_input_vs_objective.py`, `ablation_second_tasks.py`, `
 in their docstrings.
 
 **Figures** (`figures/`): `make_figures.py` draws every figure from `results/paper/` and
-`experiments/stats/`; `figure_base.py` holds the shared style.
+`experiments/stats/`; `npj.mplstyle` holds the fonts and line widths, `figure_base.py` the colors
+and layout helpers. The fonts are Arial, or the next available of Helvetica and Nimbus Sans.
 
 ## Environment
 
@@ -359,6 +362,7 @@ All files are in `results/paper/` unless a folder is named. Files ending in `_pe
 
 | Paper | Files | Written by |
 |---|---|---|
+| Fig. 1 | `fig1_example_ptbxl.npz` (signals), `experiments/stats/cohorts` (corpus sizes) | `fig1_example.py`, `cohort_tables.py` |
 | Table 1, Fig. 2a, Suppl. Tables S3 and S4 | `leadset_auc`, `leadset_groups`, `leadset_diffs`, `leadset_diff_per_seed_*` | `leadset_final.py` |
 | Table 1, Suppl. Tables S2 and S5 (PTB-XL) | `ptbxl_counts`, `ptbxl_auc`, `ptbxl_groups`, `ptbxl_diffs`, `cohort_ptbxl` | `ptbxl_final.py labels`, `eval`; `extras_final.py cohort_ptbxl` |
 | Suppl. Table S8 (PTB-XL by fold) | `ptbxl_by_fold`, `ptbxl_by_fold_per_finding`, `ptbxl_validation_by_fold` | `ptbxl_final.py folds`, `validation` |

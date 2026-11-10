@@ -1,0 +1,51 @@
+# Figure style of the paper (Nature Medicine / npj Digital Medicine), loaded by figure_base.py.
+# Figures are drawn at their final width (88 or 180 mm) and placed at 100 %.
+font.family:        sans-serif
+font.sans-serif:    Arial, Helvetica, Nimbus Sans, DejaVu Sans
+font.size:          7
+axes.labelsize:     7
+axes.titlesize:     7
+legend.fontsize:    7
+xtick.labelsize:    6
+ytick.labelsize:    6
+mathtext.default:   regular
+
+axes.linewidth:     0.5
+axes.spines.top:    False
+axes.spines.right:  False
+axes.facecolor:     none
+axes.labelpad:      2
+axes.axisbelow:     True
+xtick.major.width:  0.5
+ytick.major.width:  0.5
+xtick.minor.width:  0.5
+ytick.minor.width:  0.5
+xtick.major.size:   2
+ytick.major.size:   2
+xtick.minor.size:   1
+ytick.minor.size:   1
+xtick.major.pad:    1.5
+ytick.major.pad:    1.5
+
+lines.linewidth:    1
+lines.markersize:   3.5
+lines.markeredgewidth: 0.5
+patch.linewidth:    0.5
+errorbar.capsize:   1.5
+hatch.linewidth:    0.5
+
+legend.frameon:     False
+legend.handlelength: 1.6
+legend.handletextpad: 0.4
+legend.columnspacing: 1.2
+legend.borderpad:   0
+legend.borderaxespad: 0
+legend.labelspacing: 0.25
+
+figure.facecolor:   white
+figure.dpi:         300
+savefig.facecolor:  white
+savefig.dpi:        300
+savefig.bbox:       standard
+pdf.fonttype:       42
+ps.fonttype:        42

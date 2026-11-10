@@ -46,7 +46,9 @@ decoded waveforms, extracted features, trained weights) are included in this
 repository. It does include aggregated result tables (AUCs, confidence intervals,
 P values and counts per finding, in results/paper/ and experiments/stats/) and, for
 the openly licensed PhysioNet/CinC 2017 data only, the reference labels and per-record
-out-of-fold probabilities without record names (results/paper/handheld_oof.npz). Users must obtain the data themselves under the
+out-of-fold probabilities without record names (results/paper/handheld_oof.npz), and
+the signals of one openly licensed PTB-XL recording (CC BY 4.0), without its record
+name, for Fig. 1 (results/paper/fig1_example_ptbxl.npz). Users must obtain the data themselves under the
 applicable terms. All are distributed via PhysioNet (Goldberger et al.,
 Circulation 101(23):e215, 2000):
 
