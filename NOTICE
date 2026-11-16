@@ -68,12 +68,12 @@ Circulation 101(23):e215, 2000):
       Clifford, G.D., et al. (2017).
         https://physionet.org/content/challenge-2017/
 
-  * Chapman-Shaoxing + Ningbo (`ecg-arrhythmia`) — open access. The first
-    external cohort: 13 physician-annotated findings, one to twelve leads.
+  * Chapman-Shaoxing + Ningbo (`ecg-arrhythmia`) — open access. The Chinese
+    cohort: 13 physician-annotated findings, one to twelve leads.
       Zheng, J., et al. Scientific Data 7, 48 (2020).
         https://physionet.org/content/ecg-arrhythmia/
 
-  * PTB-XL (version 1.0.3) — open access. The second external cohort.
+  * PTB-XL (version 1.0.3) — open access. The PTB-XL cohort.
       Wagner, P., et al. Scientific Data 7, 154 (2020).
         https://physionet.org/content/ptb-xl/
 

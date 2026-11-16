@@ -11,13 +11,16 @@ figures are written next to this script, as PNG (300 dpi) and PDF, named after t
 paper:
 
   fig1   Fig. 1   study overview (schematic; the waveforms are drawn, not data)
-  fig2   Fig. 2   lead sets: a every finding of the external cohort, b label efficiency
-  fig3   Fig. 3   atrial fibrillation on the handheld device: a approaches, b amount of training strips
-  fig4   Fig. 4   cost of a broad reading: a ROC curves on the handheld device, b alarms against sensitivity
+  fig2   Fig. 2   lead sets: a every finding of the Chinese cohort, b label efficiency
+  fig3   Fig. 3   atrial fibrillation on the handheld device: a ROC curves, b size of the pre-training corpus
+  fig4   Fig. 4   a broad reading in the Chinese cohort: a alarms against sensitivity, b specificity per finding
   fig5   Fig. 5   recorded noise: a hospital diagnoses, b the 13 findings
-  figS1  Fig. S1  lead I as a strip against the twelve-lead averaged beat with heart rate, by finding
-  figS2  Fig. S2  calibration curves of the strips, external cohort
+  figS1  Fig. S1  the lead-I strip against the 12-lead averaged beat with heart rate, by finding
+  figS2  Fig. S2  calibration curves of the strips, Chinese cohort
   figS3  Fig. S3  flow of recordings
+
+Names in the code and in the paper: the external cohort of the code is the Chinese cohort of the paper
+(Chapman-Shaoxing and Ningbo), the strip encoder of the handheld analyses is the full-corpus encoder.
 
 Style, colors and the drawing helpers of the overview are in figure_base.py.
 """
@@ -43,9 +46,9 @@ C_GREY, C_DARK, C_ORANGE, C_BLUE, C_NAVY, C_PURPLE = fb.C_GREY, fb.C_DARK, fb.C_
 COL = fb.COLORS
 LEADS = {1: ("lead I", COL["lead1"]), 2: ("leads I and II", COL["leads2"]), 12: ("twelve leads", COL["twelve"])}
 NICE = {"atrial_fibrillation": "atrial fibrillation", "myocardial_infarction": "myocardial infarction",
-        "conduction_disorder": "conduction disorder", "structural_hyp": "hypertrophy", "sinus_bradycardia": "sinus bradycardia",
+        "conduction_disorder": "conduction disorders", "structural_hyp": "hypertrophy", "sinus_bradycardia": "sinus bradycardia",
         "sinus_tachycardia": "sinus tachycardia", "supraventricular_tachycardia": "supraventricular tachycardia",
-        "atrial_premature_beats": "atrial premature beats", "t_wave_abnormality": "T-wave abnormality",
+        "atrial_premature_beats": "atrial premature beats", "t_wave_abnormality": "T-wave abnormalities",
         "st_changes": "ST changes", "abnormal_q_wave": "abnormal Q waves", "prolonged_qt": "prolonged QT interval",
         "left_axis_deviation": "left axis deviation"}
 
@@ -86,17 +89,14 @@ def fig1():
     ax.set_xlim(0, W); ax.set_ylim(0, H); ax.set_aspect("equal")
     head = dict(fontsize=7.0, fontweight="bold", ha="left", va="center")
     note = dict(fontsize=5.9, ha="center", va="top", color="#333333", linespacing=1.35)
-    co = pd.read_csv(os.path.join(fb.ST, "cohorts.csv")).set_index("cohort")
-    bt = res("averaged_beat_training_counts.csv").n_train
-    ss = (n_trained(int(co.loc["MIMIC 98k strip corpus", "n_records"])), n_trained(int(co.loc["MIMIC lead-I strip corpus", "n_records"])))
     ax.text(0.10, 2.76, "Unlabeled hospital ECGs", **head)
     tb = np.linspace(-0.35, 0.55, 300)
     fb._wave(fig, [0.035, 0.745, 0.115, 0.115], tb, fb._beat(tb), C_ORANGE)
-    ax.text(0.52, 2.16, f"averaged beat\n{bt.min():,} to {bt.max():,}\ntraining recordings", **note)
+    ax.text(0.52, 2.16, "averaged beat", **note)
     ts = np.linspace(0, 4.2, 1400)
     peaks = np.cumsum([0.35, 0.78, 0.74, 0.83, 0.70, 0.80])
     fb._wave(fig, [0.035, 0.520, 0.150, 0.115], ts, sum(fb._beat(ts - q) for q in peaks), C_BLUE)
-    ax.text(0.58, 1.49, f"strip, 256 Hz\n{ss[0]:,} to {ss[1]:,}\ntraining recordings", **note)
+    ax.text(0.58, 1.49, "strip, 256 Hz", **note)
     fb._arrow_in(ax, 1.22, 1.95, 1.50, 1.95)
     fb._rbox(ax, 1.55, 1.78, 0.90, 0.34, "#e9f0f8", C_NAVY)
     ax.text(2.00, 1.95, "encoder", fontsize=7.4, fontweight="bold", ha="center", va="center", zorder=3)
@@ -108,7 +108,7 @@ def fig1():
     ax.text(2.00, 1.10, "representation", **note)
     fb._arrow_in(ax, 2.52, 1.95, 2.80, 1.95)
     ax.text(2.88, 2.76, "One logistic regression per finding", **head)
-    chips = [("atrial fibrillation", C_BLUE), ("conduction disorder", C_BLUE), ("hypertrophy", C_BLUE),
+    chips = [("atrial fibrillation", C_BLUE), ("conduction disorders", C_BLUE), ("hypertrophy", C_BLUE),
              ("ten more findings", "#9aa0a6")]
     for i, (c, col) in enumerate(chips):
         y = 2.34 - i * 0.30
@@ -134,46 +134,7 @@ def fig1():
 
 # --------------------------------------------------------------------------- #
 def fig2():
-    t1 = res("table1_handheld.csv").set_index("approach")
-    hs = res("handheld_summary.csv").set_index("readout")
-    fig, (a, b) = plt.subplots(1, 2, figsize=(W_FULL, 2.9), gridspec_kw={"width_ratios": [1.15, 1.2]})
-    keys = [("rr", "RR\nintervals"), ("median", "averaged\nbeat"), ("strip", "strip"), ("fusion", "strip +\nbeat"),
-            ("rr+strip", "RR +\nstrip")]
-    for x, (k, _) in enumerate(keys):
-        r = t1.loc[k]
-        col = COL["rr_strip"] if k == "rr+strip" else C_DARK
-        a.errorbar([x], [r.auc], yerr=[[r.auc - r.auc_lo], [r.auc_hi - r.auc]], fmt="o", color=col, ms=5,
-                   elinewidth=1.4, capsize=3, capthick=1.1, zorder=3)
-        a.text(x + 0.14, r.auc, fignum("fig3", r.auc, "table1_handheld.csv", k, "auc"), va="center", fontsize=6.6, color=col)
-    a.set_xticks(range(len(keys))); a.set_xticklabels([l for _, l in keys])
-    a.set_xlim(-0.5, len(keys) - 0.1); a.set_ylim(0.88, 1.0)
-    a.set_ylabel("AUC, atrial fibrillation"); a.set_title("a", loc="left")
-    co = pd.read_csv(os.path.join(fb.ST, "cohorts.csv")).set_index("cohort")
-    tags = [("strip_10k", 10000), ("strip_30k", 30000), ("strip_60k", 60000), ("strip_98k", n_trained(int(co.loc["MIMIC 98k strip corpus", "n_records"]))),
-            ("strip", n_trained(int(co.loc["MIMIC lead-I strip corpus", "n_records"])))]
-    xs = [n for _, n in tags]
-    rows = [hs.loc[k] for k, _ in tags]
-    b.plot(xs, [r.auc for r in rows], "-o", color=COL["strip"], ms=4, label="strip encoder, hospital strips", zorder=3)
-    b.fill_between(xs, [r.lo for r in rows], [r.hi for r in rows], color=COL["strip"], alpha=.15, zorder=1)
-    for x, r in zip(xs, rows):
-        b.plot([x, x], [r.seed_min, r.seed_max], color=COL["strip"], lw=2.2, alpha=0.6)
-    ic, med, rr = hs.loc["strip_icentia"], t1.loc["median"], t1.loc["rr"]
-    fl_ic = pd.read_csv(os.path.join(fb.ST, "cohort_flow.csv")).set_index(["cohort", "step"]).n[("Adhesive patch", "usable lead-I strips")]
-    b.axhline(rr.auc, color=COL["rr"], ls="--", lw=1.1)
-    b.text(10500, rr.auc + 0.0025, f"RR intervals ({fignum('fig3', rr.auc, 'table1_handheld.csv', 'rr', 'auc')})", fontsize=6.6, color=C_DARK)
-    b.axhline(med.auc, color=C_DARK, ls=":", lw=1.1)
-    b.text(40000, med.auc + 0.0025, f"averaged beat ({fignum('fig3', med.auc, 'table1_handheld.csv', 'median', 'auc')})", fontsize=6.6, color=C_DARK)
-    b.errorbar([n_trained(int(fl_ic))], [ic.auc], yerr=[[ic.auc - ic.lo], [ic.hi - ic.auc]], fmt="D", color=COL["patch"], ms=5, capsize=2,
-               label="strip encoder, patch strips", zorder=4)
-    b.set_xscale("log"); b.set_xticks(xs); b.set_xticklabels([f"{n / 1000:.0f}k" for n in xs]); b.minorticks_off()
-    b.set_xlabel("number of training strips (log scale)")
-    b.set_ylim(0.88, 1.0); b.set_title("b", loc="left")
-    b.legend(loc="lower right", frameon=False, fontsize=6.3)
-    fig.tight_layout(); save(fig, "fig3")
-
-
-# --------------------------------------------------------------------------- #
-def fig3():
+    """Lead sets in the Chinese cohort: a every finding with lead I, leads I and II and twelve leads; b label efficiency."""
     a_ = res("leadset_auc.csv")
     m = a_[a_.arm == "strip"].groupby(["finding", "lead_set"]).auc.mean().unstack()
     m = m.sort_values(1)
@@ -224,11 +185,14 @@ def _roc(y, s):
     return np.concatenate([[0], np.cumsum(1 - y) / (1 - y).sum()]), np.concatenate([[0], np.cumsum(y) / y.sum()])
 
 
-def fig4():
+def fig3():
+    """The handheld device: a ROC curves of the approaches (one line per training run of the strip approaches);
+    b AUC against the size of the pre-training corpus. The reference lines of b have the line styles of a."""
     H = np.load(os.path.join(RES, "handheld_oof.npz"))
     y = H["y"]
-    fig, (a, b) = plt.subplots(1, 2, figsize=(W_FULL, 2.8))
-    curves = [(["rr__-1"], "RR intervals", COL["rr"], (0, (1, 1))), (["median__-1"], "averaged beat", COL["beat"], (0, (5, 2))),
+    rr_ls, beat_ls = (0, (1, 1)), (0, (5, 2))
+    fig, (a, b) = plt.subplots(1, 2, figsize=(W_FULL, 2.9))
+    curves = [(["rr__-1"], "RR intervals", COL["rr"], rr_ls), (["median__-1"], "averaged beat", COL["beat"], beat_ls),
               ([f"strip__{k}" for k in range(5)], "strip", COL["strip"], "-"),
               ([f"rr+strip__{k}" for k in range(5)], "RR intervals + strip", COL["rr_strip"], "-")]
     for keys, lab, col, ls in curves:
@@ -240,21 +204,73 @@ def fig4():
     a.set_xlim(0, 0.3); a.set_ylim(0.6, 1.0)
     a.set_xlabel("1 - specificity"); a.set_ylabel("sensitivity")
     a.set_title("a", loc="left"); a.legend(loc="lower right", frameon=False, fontsize=6.2)
+
+    t1 = res("table1_handheld.csv").set_index("approach")
+    hs = res("handheld_summary.csv").set_index("readout")
+    co = pd.read_csv(os.path.join(fb.ST, "cohorts.csv")).set_index("cohort")
+    tags = [("strip_10k", 10000), ("strip_30k", 30000), ("strip_60k", 60000),
+            ("strip_98k", n_trained(int(co.loc["MIMIC 98k strip corpus", "n_records"]))),
+            ("strip", n_trained(int(co.loc["MIMIC lead-I strip corpus", "n_records"])))]
+    xs = [n for _, n in tags]
+    rows = [hs.loc[k] for k, _ in tags]
+    b.plot(xs, [r.auc for r in rows], "-o", color=COL["strip"], ms=4, label="strip encoder, hospital strips", zorder=3)
+    b.fill_between(xs, [r.lo for r in rows], [r.hi for r in rows], color=COL["strip"], alpha=.15, zorder=1)
+    for x, r in zip(xs, rows):
+        b.plot([x, x], [r.seed_min, r.seed_max], color=COL["strip"], lw=2.2, alpha=0.6)
+    ic, med, rr = hs.loc["strip_icentia"], t1.loc["median"], t1.loc["rr"]
+    fl_ic = pd.read_csv(os.path.join(fb.ST, "cohort_flow.csv")).set_index(["cohort", "step"]).n[("Adhesive patch", "usable lead-I strips")]
+    b.axhline(rr.auc, color=COL["rr"], ls=rr_ls, lw=1.2)
+    b.text(10500, rr.auc + 0.0025, f"RR intervals ({fignum('fig3', rr.auc, 'table1_handheld.csv', 'rr', 'auc')})", fontsize=6.6, color=C_DARK)
+    b.axhline(med.auc, color=COL["beat"], ls=beat_ls, lw=1.2)
+    b.text(40000, med.auc + 0.0025, f"averaged beat ({fignum('fig3', med.auc, 'table1_handheld.csv', 'median', 'auc')})", fontsize=6.6, color=C_DARK)
+    b.errorbar([n_trained(int(fl_ic))], [ic.auc], yerr=[[ic.auc - ic.lo], [ic.hi - ic.auc]], fmt="D", color=C_NAVY, ms=5, capsize=2,
+               label="strip encoder, patch strips", zorder=4)
+    b.set_xscale("log"); b.set_xticks(xs); b.set_xticklabels([f"{n / 1000:.0f}k" for n in xs]); b.minorticks_off()
+    b.set_xlabel("number of training strips (log scale)"); b.set_ylabel("AUC, atrial fibrillation")
+    b.set_ylim(0.88, 1.0); b.set_title("b", loc="left")
+    b.legend(loc="lower right", frameon=False, fontsize=6.3)
+    fig.tight_layout(); save(fig, "fig3")
+
+
+def fig4():
+    """A broad reading in the Chinese cohort: a share of the recordings without any finding that at least one
+    classifier flags, against the mean sensitivity, with the stars of the sensitivity of 0.90 named; b specificity of
+    each finding at a sensitivity of 0.90 with lead I, the lowest at the top."""
     fr = res("alarms_frontier.csv").groupby(["lead_set", "specificity_target"])[["share_any_no_finding", "mean_sensitivity"]].mean()
     bu = res("alarms_burden.csv")
     pf = res("alarms_per_finding.csv")
+    fig, (a, b) = plt.subplots(1, 2, figsize=(W_FULL, 2.9), gridspec_kw={"width_ratios": [1.0, 1.05]})
+    star = {}
     for n, (lab, col) in LEADS.items():
         d = fr.loc[n]
-        b.plot(100 * d.share_any_no_finding, d.mean_sensitivity, "-o", color=col, ms=3, label=lab)
+        a.plot(100 * d.share_any_no_finding, d.mean_sensitivity, "-o", color=col, ms=3, label=lab)
         r = bu[(bu.lead_set == n) & (bu.population == "no_finding")].iloc[0]
-        b.plot([100 * r.share_any], [pf[pf.lead_set == n].groupby("seed").sensitivity.mean().mean()], "*", color=col, ms=8)
-    b.set_xlabel("recordings without a finding with an alarm (%)"); b.set_ylabel("mean sensitivity, 13 findings")
-    b.set_xlim(0, 100); b.set_ylim(0.3, 1.0)
-    b.set_title("b", loc="left"); b.legend(loc="lower right", frameon=False, fontsize=6.2)
+        star[n] = (100 * r.share_any, pf[pf.lead_set == n].groupby("seed").sensitivity.mean().mean())
+        a.plot(*star[n], "*", color=col, ms=8, zorder=4)
+    assert abs(star[2][0] - star[12][0]) < 5 < star[1][0] - star[2][0], "the stars of two and twelve leads overlap, that of lead I does not"
+    left, right = sorted((2, 12), key=lambda k: star[k][0])
+    for k, ha, dx in ((left, "right", -4), (right, "left", 4)):
+        a.annotate(LEADS[k][0], xy=(star[k][0], star[k][1] + 0.012), xytext=(star[k][0] + dx, 0.965), ha=ha, va="center",
+                   fontsize=6.0, color=LEADS[k][1], arrowprops=dict(arrowstyle="-", lw=0.6, color=LEADS[k][1], shrinkA=1, shrinkB=0))
+    a.text(star[1][0], star[1][1] - 0.03, LEADS[1][0], ha="center", va="top", fontsize=6.0, color=LEADS[1][1])
+    a.set_xlabel("finding-free recordings flagged (%)"); a.set_ylabel("mean sensitivity, 13 findings")
+    a.set_xlim(0, 100); a.set_ylim(0.3, 1.0)
+    a.set_title("a", loc="left"); a.legend(loc="lower right", frameon=False, fontsize=6.2)
+
+    sp = pf[pf.lead_set == 1].groupby(["finding", "seed"]).specificity.mean().groupby("finding").agg(["mean", "min", "max"])
+    sp = sp.sort_values("mean", ascending=False)                  # the lowest specificity at the top
+    ys = np.arange(len(sp))
+    b.barh(ys, sp["mean"], height=0.62, color=COL["lead1"], zorder=2)
+    b.errorbar(sp["mean"], ys, xerr=[sp["mean"] - sp["min"], sp["max"] - sp["mean"]], fmt="none", ecolor=C_DARK,
+               elinewidth=0.7, capsize=1.4, capthick=0.7, zorder=3)
+    b.set_yticks(ys); b.set_yticklabels([NICE[f] for f in sp.index], fontsize=6.4)
+    b.set_ylim(-0.6, len(sp) - 0.4)
+    b.set_xlim(0, 1.0); b.set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+    b.set_xlabel("specificity at a sensitivity of 0.90, lead I")
+    b.set_title("b", loc="left")
     fig.tight_layout(); save(fig, "fig4")
 
 
-# --------------------------------------------------------------------------- #
 def fig5():
     style = {"bw": (COL["noise_bw"], "baseline wander"), "ma": (COL["noise_ma"], "muscle artifact"), "em": (COL["noise_em"], "electrode motion"),
              "combined": (COL["noise_all"], "all three combined")}
@@ -279,7 +295,6 @@ def fig5():
     fig.tight_layout(); save(fig, "fig5")
 
 
-# --------------------------------------------------------------------------- #
 def figS1():
     t = pd.read_csv(os.path.join(RES, "beat_hr_per_finding.csv"))
     t = t[t.comparison == "strip1 vs beat12+hr"].set_index("finding").sort_values("diff")
@@ -294,6 +309,33 @@ def figS1():
     fig.tight_layout(); save(fig, "figS1")
 
 
+def figS2():
+    """Calibration curves of the strip classifiers in the Chinese cohort, one panel per finding."""
+    cc = res("calibration_curves.csv").groupby(["lead_set", "finding", "bin"])[["predicted", "observed"]].mean().reset_index()
+    fig, axes = plt.subplots(4, 5, figsize=(W_FULL, 5.2), sharex=False, sharey=False)
+    short = {"supraventricular_tachycardia": "supraventricular\ntachycardia", "atrial_premature_beats": "atrial premature\nbeats",
+             "prolonged_qt": "prolonged QT\ninterval", "myocardial_infarction": "myocardial\ninfarction",
+             "conduction_disorder": "conduction\ndisorders", "t_wave_abnormality": "T-wave\nabnormalities"}
+    for row, (group, finds) in enumerate(FINDING_GROUPS):
+        for col_, f in enumerate(finds):
+            ax = axes[row, col_]
+            d = cc[cc.finding == f]
+            mx = max(d.predicted.max(), d.observed.max()) * 1.05
+            ax.plot([0, mx], [0, mx], color="#bbbbbb", lw=0.6)
+            for n, (lab, col) in LEADS.items():
+                s_ = d[d.lead_set == n]
+                ax.plot(s_.predicted, s_.observed, "-o", color=col, ms=1.8, lw=0.8, label=lab)
+            ax.set_title(short.get(f, NICE[f]), fontsize=5.6, fontweight="normal", loc="left")
+            ax.tick_params(labelsize=4.8)
+        for col_ in range(len(finds), 5):
+            axes[row, col_].axis("off")
+        axes[row, 0].annotate(group, xy=(0, 1), xycoords="axes fraction", xytext=(-22, 21), textcoords="offset points", fontsize=6.0, fontweight="bold", ha="left", va="bottom")
+    axes[3, 2].legend(*axes[0, 0].get_legend_handles_labels(), frameon=False, fontsize=5.6, loc="center")
+    fig.supxlabel("predicted probability (mean per bin)", fontsize=6.4)
+    fig.supylabel("observed frequency", fontsize=6.4)
+    fig.tight_layout(); save(fig, "figS2")
+
+
 def figS3():
     """Flow of recordings: training corpora on top, evaluation cohorts below; exclusions with number and reason."""
     fl = pd.read_csv(os.path.join(fb.ST, "cohort_flow.csv")).set_index(["cohort", "step"])["n"]
@@ -301,8 +343,8 @@ def figS3():
     bt = res("averaged_beat_training_counts.csv").set_index(["arm", "run"])
     pair = res("pairing_corpus.csv").iloc[0]
     ptb = res("ptbxl_flow.csv").set_index("step")["n"]
-    n = lambda c, s: int(fl[(c, s)])
-    fmt = lambda v: f"{int(v):,}"
+    n = lambda c, s: int(fl[(c, s)])  # noqa: E731
+    fmt = lambda v: f"{int(v):,}"  # noqa: E731
     drawn30, us30 = n("MIMIC averaged beat", "first records of the record list"), int(co.loc["MIMIC averaged-beat training set", "n_records"])
     tw = bt.loc[("twelve_beat", 0)]
     drawn3, us3 = n("MIMIC strips", "records drawn at random from the record list (seed 0)"), n("MIMIC strips", "finite, non-flat lead I")
@@ -317,22 +359,22 @@ def figS3():
     m1 = n("MIMIC hospital diagnoses", "hospital encounter (emergency department or admission) at or before the recording")
     m2 = n("MIMIC hospital diagnoses", "usable lead-I strip (noise analysis)")
     top = [("Averaged-beat encoders", [f"first {fmt(drawn30)} recordings\nof the record list", f"{fmt(us30)} usable", f"{fmt(tw.n_train)} trained\n(twelve leads)"],
-            [f"\u2212{fmt(drawn30 - us30)}: no beat in\nany of the twelve leads", f"\u2212{fmt(tw.n_val)}: held out\n(20% of patients)"]),
-           ("Handheld encoder", [f"{fmt(drawn3)} drawn\nat random", f"{fmt(us3)} usable", f"{fmt(n_trained(us3))} trained"],
-            [f"\u2212{fmt(drawn3 - us3)}: non-finite\nor flat lead I", f"\u2212{fmt(us3 - n_trained(us3))}: held out"]),
+            [f"−{fmt(drawn30 - us30)}: non-finite samples\nor no beat in any lead", f"−{fmt(tw.n_val)}: held out\n(20% of patients)"]),
+           ("Full-corpus encoder", [f"{fmt(drawn3)} drawn\nat random", f"{fmt(us3)} usable", f"{fmt(n_trained(us3))} trained"],
+            [f"−{fmt(drawn3 - us3)}: non-finite\nor flat lead I", f"−{fmt(us3 - n_trained(us3))}: held out"]),
            ("Lead-set encoders", [f"{fmt(ls)} drawn from\nthe usable strips", f"{fmt(n_trained(ls))} trained"],
-            [f"\u2212{fmt(ls - n_trained(ls))}: held out"]),
-           ("Controlled comparison", [f"the {fmt(pair.n_source)} of the\nlead-set corpus", f"{fmt(pair.n_records)} usable", f"{fmt(pair.n_train)} trained"],
-            [f"\u2212{fmt(pair.n_source - pair.n_records)}: no clean\naveraged beat", f"\u2212{fmt(pair.n_records - pair.n_train)}: held out"]),
-           ("Patch encoder", [f"Icentia11k, 40 patients\n{fmt(ic)} strips", f"{fmt(n_trained(ic))} trained"], [f"\u2212{fmt(ic - n_trained(ic))}: held out (5%)"])]
+            [f"−{fmt(ls - n_trained(ls))}: held out"]),
+           ("Controlled-comparison encoders", [f"the {fmt(pair.n_source)} of the\nlead-set corpus", f"{fmt(pair.n_records)} usable", f"{fmt(pair.n_train)} trained"],
+            [f"−{fmt(pair.n_source - pair.n_records)}: no clean\naveraged beat", f"−{fmt(pair.n_records - pair.n_train)}: held out"]),
+           ("Patch encoder", [f"Icentia11k, 40 patients\n{fmt(ic)} strips", f"{fmt(n_trained(ic))} trained"], [f"−{fmt(ic - n_trained(ic))}: held out (5%)"])]
     bottom = [("Handheld device", [f"PhysioNet/CinC 2017\n{fmt(h0)} recordings", f"{fmt(h1)} valid", f"{fmt(h2)} for atrial fibrillation\nvs normal ({fmt(ha)} with atrial fibrillation)"],
-               [f"\u2212{fmt(h0 - h1)}: no valid averaged beat", f"\u2212{fmt(ho + hn)}: other rhythm ({fmt(ho)})\nor too noisy ({fmt(hn)})"]),
-              ("First external cohort", [f"Chapman\u2013Shaoxing and Ningbo\n{fmt(e0)} recordings", f"{fmt(e1)} patients,\none recording each, 13 findings"],
-               [f"\u2212{fmt(e0 - e1)}: no detected beat\nor no valid strip"]),
-              ("Second external cohort", [f"PTB-XL\n{fmt(p0)} recordings", f"{fmt(p1)} with labels", f"{fmt(p2)} patients,\n12 findings tested"],
-               [f"\u2212{fmt(p0 - p1)}: no Challenge label", f"\u2212{fmt(p1 - p2)}: later recordings\nof the same patient"]),
+               [f"−{fmt(h0 - h1)}: no valid averaged beat", f"−{fmt(ho + hn)}: other rhythm ({fmt(ho)})\nor too noisy ({fmt(hn)})"]),
+              ("Chinese cohort", [f"Chapman–Shaoxing and Ningbo\n{fmt(e0)} recordings", f"{fmt(e1)} patients,\none recording each, 13 findings"],
+               [f"−{fmt(e0 - e1)}: no detected beat\nor no valid strip"]),
+              ("PTB-XL", [f"{fmt(p0)} recordings", f"{fmt(p1)} with labels", f"{fmt(p2)} patients,\n12 findings tested"],
+               [f"−{fmt(p0 - p1)}: no Challenge label", f"−{fmt(p1 - p2)}: later recordings\nof the same patient"]),
               ("Hospital diagnoses (MIMIC-IV-ECG)", [f"{fmt(m0)} patients outside\nevery training corpus", f"{fmt(m1)} admitted\nby the recording", f"{fmt(m2)} patients,\n11 diagnoses"],
-               [f"\u2212{fmt(m0 - m1)}: no admission\nby the recording", f"\u2212{fmt(m1 - m2)}: no usable\nlead-I strip"])]
+               [f"−{fmt(m0 - m1)}: no admission\nby the recording", f"−{fmt(m1 - m2)}: no usable\nlead-I strip"])]
     fig = plt.figure(figsize=(W_FULL, 5.2))
     ax = fig.add_axes([0, 0, 1, 1]); ax.axis("off")
     h, gap = 0.074, 0.058
@@ -359,32 +401,6 @@ def figS3():
     for c, (title, boxes, excl) in enumerate(bottom):
         column(0.010 + c * (w + 0.0225), w, 0.305, title, boxes, excl, "#f3f3f3")
     save(fig, "figS3")
-
-
-def figS2():
-    cc = res("calibration_curves.csv").groupby(["lead_set", "finding", "bin"])[["predicted", "observed"]].mean().reset_index()
-    fig, axes = plt.subplots(4, 5, figsize=(W_FULL, 5.2), sharex=False, sharey=False)
-    short = {"supraventricular_tachycardia": "supraventricular\ntachycardia", "atrial_premature_beats": "atrial premature\nbeats",
-             "prolonged_qt": "prolonged QT\ninterval", "myocardial_infarction": "myocardial\ninfarction",
-             "conduction_disorder": "conduction\ndisorder", "t_wave_abnormality": "T-wave\nabnormality"}
-    for row, (group, finds) in enumerate(FINDING_GROUPS):
-        for col_, f in enumerate(finds):
-            ax = axes[row, col_]
-            d = cc[cc.finding == f]
-            mx = max(d.predicted.max(), d.observed.max()) * 1.05
-            ax.plot([0, mx], [0, mx], color="#bbbbbb", lw=0.6)
-            for n, (lab, col) in LEADS.items():
-                s = d[d.lead_set == n]
-                ax.plot(s.predicted, s.observed, "-o", color=col, ms=1.8, lw=0.8, label=lab)
-            ax.set_title(short.get(f, NICE[f]), fontsize=5.6, fontweight="normal", loc="left")
-            ax.tick_params(labelsize=4.8)
-        for col_ in range(len(finds), 5):
-            axes[row, col_].axis("off")
-        axes[row, 0].annotate(group, xy=(0, 1), xycoords="axes fraction", xytext=(-22, 21), textcoords="offset points", fontsize=6.0, fontweight="bold", ha="left", va="bottom")
-    axes[3, 2].legend(*axes[0, 0].get_legend_handles_labels(), frameon=False, fontsize=5.6, loc="center")
-    fig.supxlabel("predicted probability (mean per tenth)", fontsize=6.4)
-    fig.supylabel("observed share", fontsize=6.4)
-    fig.tight_layout(); save(fig, "figS2")
 
 
 if __name__ == "__main__":
