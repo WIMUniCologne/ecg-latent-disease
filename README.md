@@ -135,11 +135,11 @@ plainer ones:
 | `models/autoencoder.py`, `train.py` | the averaged-beat autoencoder and its training |
 | `experiments/ssl_icentia_wearable.py` | the strip encoder (`ConvMAE1D`), its designs, masks, strip split and masked pre-training |
 | `experiments/design_candidates.py` | the candidate strip designs (1,024 or 2,560 samples, width 64 or 128): inputs, pre-training, encoding |
-| `experiments/design_selection.py` | the choice of the strip design by nested cross-validation (Supplementary Table S20) |
+| `experiments/design_selection.py` | the choice of the strip design by nested cross-validation (Supplementary Table S24) |
 | `experiments/pretrain_strip_encoders.py` | the full-corpus, corpus-size and patch encoders (lead I) |
 | `experiments/twolead_strip_arm.py`, `experiments/ssl_contrastive_strip.py` | strip encoders of one, two and twelve leads at 1,024 samples; the contrastive objective |
-| `experiments/ablation_final.py` | the same encoder pre-trained on strips and on their averaged beats (Supplementary Table S13) |
-| `experiments/pair_v5_final.py` | lead I paired with the chest lead V5 (Supplementary Table S7) |
+| `experiments/ablation_final.py` | the same encoder pre-trained on strips and on their averaged beats (Supplementary Table S15) |
+| `experiments/pair_v5_final.py` | lead I paired with the chest lead V5 (Supplementary Table S5) |
 | `experiments/encode_external.py` | representations of the Chinese cohort from the averaged-beat encoders and the 1,024-sample strip encoders |
 
 **Read-outs and statistics** (`experiments/`)
@@ -150,14 +150,14 @@ plainer ones:
 | `wearable_oof.py`, `eval_pipeline.py`, `oof_stats.py` | the out-of-fold logistic read-out and its shuffled control; DeLong CIs and paired tests; the hospital labels; the noise analysis |
 | `wearable_harness.py`, `wearable_w2_full.py` | frozen encoders, file naming, the inputs of the external cohort |
 | `leadset_final.py` | the lead-set comparison in the Chinese cohort (Table 1, Fig. 2a) |
-| `ptbxl_final.py` | the lead-set comparison in PTB-XL (Table 1, Supplementary Tables S6 and S8) |
-| `handheld_final.py`, `cinc2017_features.py`, `rr_intervals.py` | atrial fibrillation on the handheld device (Table 2, Fig. 3) |
+| `ptbxl_final.py` | the lead-set comparison in PTB-XL (Table 2, Supplementary Tables S6 to S8) |
+| `handheld_final.py`, `cinc2017_features.py`, `rr_intervals.py` | atrial fibrillation on the handheld device (Table 3, Fig. 3) |
 | `hospital_final.py`, `recorded_noise.py` | hospital diagnoses and recorded noise (Fig. 5) |
 | `comparators_final.py`, `e2b_ecgfm.py` | the supervised networks (residual and compact network, fine-tuned strip encoder) and ECG-FM |
 | `secondary_final.py`, `supplement_final.py`, `extras_final.py` | the further analyses of the Chinese cohort and the handheld device, and the false alarms of a broad reading (Fig. 4) |
 | `describe_data.py`, `cohort_tables.py`, `pairing_corpus_count.py` | counts of the data and cohorts |
-| `perlead_ranking.py`, `beat_latents.py`, `seed_stability_report.py` | ranking of the twelve single-lead averaged-beat encoders (Supplementary Table S12) |
-| `c2_published_encode.py` | representations from the published averaged-beat encoder of Friedman et al. (Supplementary Table S11) |
+| `perlead_ranking.py`, `beat_latents.py`, `seed_stability_report.py` | ranking of the twelve single-lead averaged-beat encoders (Supplementary Table S17) |
+| `c2_published_encode.py` | representations from the published averaged-beat encoder of Friedman et al. (Supplementary Table S16) |
 | `reproduce_paper.sh`, `train_rpeak_arms.sh`, `train_seed_stability.sh` | the run scripts |
 
 Further modules (`ablation_input_vs_objective.py`, `ablation_second_tasks.py`, `e2_baselines.py`,
@@ -378,34 +378,34 @@ All files are in `results/paper/` unless a folder is named. Files ending in `_pe
 
 | Paper | Files | Written by |
 |---|---|---|
-| Table 1, Fig. 2a, Suppl. Tables S4 and S5 | `leadset_auc`, `leadset_groups`, `leadset_diffs`, `leadset_diff_per_seed_*` | `leadset_final.py` |
-| Table 1, Suppl. Tables S3 and S6 (PTB-XL) | `ptbxl_counts`, `ptbxl_auc`, `ptbxl_groups`, `ptbxl_diffs`, `cohort_ptbxl` | `ptbxl_final.py labels`, `eval`; `extras_final.py cohort_ptbxl` |
-| Table 2, Fig. 3b, Suppl. Table S14 (corpus size) | `handheld_auc`, `handheld_summary`, `handheld_diffs`, `handheld_utility`, `table1_handheld` | `handheld_final.py`, `extras_final.py table1` |
-| Fig. 2b, Suppl. Table S9 | `label_efficiency_frozen`, `label_efficiency_frozen_summary`, `label_efficiency_supervised`, `comparators_auc`, `comparators_groups`, `comparators_vs_frozen*` | `secondary_final.py label_efficiency`, `comparators_final.py eval`, `labeleff` |
+| Tables 1 and 2, Fig. 2a, Suppl. Tables S3 and S4 | `leadset_auc`, `leadset_groups`, `leadset_diffs`, `leadset_diff_per_seed_*` | `leadset_final.py` |
+| Table 2, Suppl. Tables S2, S6 and S7 (PTB-XL) | `ptbxl_counts`, `ptbxl_auc`, `ptbxl_groups`, `ptbxl_diffs`, `cohort_ptbxl` | `ptbxl_final.py labels`, `eval`; `extras_final.py cohort_ptbxl` |
+| Table 3, Fig. 3b, Suppl. Tables S10 and S11 (all approaches, corpus size) | `handheld_auc`, `handheld_summary`, `handheld_diffs`, `handheld_utility`, `table1_handheld` | `handheld_final.py`, `extras_final.py table1` |
+| Fig. 2b, Suppl. Tables S18 and S19 | `label_efficiency_frozen`, `label_efficiency_frozen_summary`, `label_efficiency_supervised`, `comparators_auc`, `comparators_groups`, `comparators_vs_frozen*` | `secondary_final.py label_efficiency`, `comparators_final.py eval`, `labeleff` |
 | Fig. 3a | `handheld_oof.npz` | `handheld_final.py` |
-| Fig. 4, Suppl. Table S16 | `alarms_frontier`, `alarms_burden`, `alarms_per_finding`, `alarms_threshold_transfer`, `alarms_contribution`, `alarms_cumulative` | `secondary_final.py alarms`, `supplement_final.py cumulative` |
-| Fig. 5 | `hospital_noise`, `hospital_noise_s*`, `noise13`, `noise13_per_seed` | `hospital_final.py`, `supplement_final.py noise13` |
+| Fig. 4, Suppl. Table S13 | `alarms_frontier`, `alarms_burden`, `alarms_per_finding`, `alarms_threshold_transfer`, `alarms_contribution`, `alarms_cumulative` | `secondary_final.py alarms`, `supplement_final.py cumulative` |
+| Fig. 5, Suppl. Table S22 | `hospital_noise`, `hospital_noise_s*`, `noise13`, `noise13_per_seed` | `hospital_final.py`, `supplement_final.py noise13` |
 | Suppl. Table S1 | `averaged_beat_training_counts`, `averaged_beat_training_counts_other`, `pairing_corpus`, `experiments/stats/cohort_flow` | `describe_data.py`, `pairing_corpus_count.py`, `cohort_tables.py` |
-| Suppl. Table S2 | `controls` | `extras_final.py controls` |
-| Suppl. Table S4 (types of hypertrophy) | `hypertrophy_split` | `supplement_final.py hypertrophy` |
-| Suppl. Table S7 | `pair_v5_auc`, `pair_v5_groups`, `pair_v5_diffs` | `pair_v5_final.py eval` |
-| Suppl. Table S8 (heart rate, AUPRC) | `auprc_per_finding`, `rates_auprc_summary` | `secondary_final.py rates` |
-| Suppl. Table S8 (PTB-XL by fold) | `ptbxl_by_fold`, `ptbxl_by_fold_per_finding`, `ptbxl_validation_by_fold` | `ptbxl_final.py folds`, `validation` |
-| Suppl. Table S8 (transfer between hospitals) | `loho_auc`, `loho_summary` | `secondary_final.py loho` |
-| Suppl. Table S8 (subgroups) | `subgroups`, `subgroups_per_finding` | `extras_final.py subgroups` |
+| Table 2, Suppl. Table S9 | `controls` | `extras_final.py controls` |
+| Suppl. Table S3 (types of hypertrophy) | `hypertrophy_split` | `supplement_final.py hypertrophy` |
+| Suppl. Table S5 | `pair_v5_auc`, `pair_v5_groups`, `pair_v5_diffs` | `pair_v5_final.py eval` |
+| Table 2, Suppl. Table S8 (heart rate, AUPRC) | `auprc_per_finding`, `rates_auprc_summary` | `secondary_final.py rates` |
+| Table 2, Suppl. Table S8 (PTB-XL by fold) | `ptbxl_by_fold`, `ptbxl_by_fold_per_finding`, `ptbxl_validation_by_fold` | `ptbxl_final.py folds`, `validation` |
+| Table 2, Suppl. Table S8 (transfer between hospitals) | `loho_auc`, `loho_summary` | `secondary_final.py loho` |
+| Table 2, Suppl. Table S8 (subgroups) | `subgroups`, `subgroups_per_finding` | `extras_final.py subgroups` |
 | Suppl. Table S8 (ST changes) | `st_narrow`, `st_elevation_code` | `supplement_final.py st_narrow`, `describe_data.py` |
 | Suppl. Table S8 (polarity), Suppl. Note 1 | `upright_external`, `stripext`, `polarity`, `handheld_orientation` | `extras_final.py upright`, `stripext`; `describe_data.py` |
-| Suppl. Table S10 | `morphology_auc`, `morphology_vs_strip`, `morphology_vs_strip_per_seed`, `strip_rr_per_finding` | `secondary_final.py morph`, `supplement_final.py strip_rr` |
-| Suppl. Table S11, Suppl. Fig. S1 | `beat_hr_auc`, `beat_hr_groups`, `beat_hr_per_finding`, `beat_hr_per_seed` | `supplement_final.py beat_hr` |
-| Suppl. Table S12 | `segmentation`, `segmentation_per_run`, `experiments/stats/perlead_ranking_{fixfs,sharedII,legacy}`, `experiments/stats/seed_stability_{fixfs,legacy}`, `experiments/stats/seed_stability_summary` | `supplement_final.py segmentation`, `perlead_ranking.py`, `seed_stability_report.py` |
-| Suppl. Table S13 | `ablation_handheld_auc`, `ablation_handheld_diff`, `ablation_external_groups`, `ablation_external_per_seed`, `pairing_corpus` | `ablation_final.py eval`, `pairing_corpus_count.py` |
-| Suppl. Table S14 (input length, ECG-FM) | `handheld_length_auc`, `handheld_length_summary`, `handheld_length_diffs`, `handheld_length_inputs`, `ecgfm_auc`, `ecgfm_diffs` | `handheld_final.py length20`, `extras_final.py ecgfm` |
-| Suppl. Table S15 | `handheld_ppv`, `handheld_af_vs_all`, `handheld_net_benefit`, `calibration`, `calibration_per_seed` | `extras_final.py handheld`, `calibration` |
-| Suppl. Table S17, Suppl. Fig. S2 | `calibration`, `calibration_curves`, `calibration_per_seed`, `recalibration` | `extras_final.py calibration`, `recal` |
-| Suppl. Table S18 | `hospital_diagnoses`, `hospital_diagnoses_per_seed` | `hospital_final.py` |
-| Suppl. Table S19 | `handheld_tasks`, `handheld_af_vs_all` | `extras_final.py tasks`, `handheld` |
-| Suppl. Table S20 | `design_inner`, `design_choice` | `design_selection.py fit`, `choose` |
-| Suppl. Table S21, Suppl. Fig. S3 | `experiments/stats/cohorts`, `experiments/stats/cohort_flow`, `ptbxl_flow` | `cohort_tables.py`, `describe_data.py` |
+| Suppl. Table S20 | `morphology_auc`, `morphology_vs_strip`, `morphology_vs_strip_per_seed`, `strip_rr_per_finding` | `secondary_final.py morph`, `supplement_final.py strip_rr` |
+| Suppl. Table S16, Suppl. Fig. S1 | `beat_hr_auc`, `beat_hr_groups`, `beat_hr_per_finding`, `beat_hr_per_seed` | `supplement_final.py beat_hr` |
+| Suppl. Table S17 | `segmentation`, `segmentation_per_run`, `experiments/stats/perlead_ranking_{fixfs,sharedII,legacy}`, `experiments/stats/seed_stability_{fixfs,legacy}`, `experiments/stats/seed_stability_summary` | `supplement_final.py segmentation`, `perlead_ranking.py`, `seed_stability_report.py` |
+| Suppl. Table S15 | `ablation_handheld_auc`, `ablation_handheld_diff`, `ablation_external_groups`, `ablation_external_per_seed`, `pairing_corpus` | `ablation_final.py eval`, `pairing_corpus_count.py` |
+| Suppl. Table S11 (input length, ECG-FM) | `handheld_length_auc`, `handheld_length_summary`, `handheld_length_diffs`, `handheld_length_inputs`, `ecgfm_auc`, `ecgfm_diffs` | `handheld_final.py length20`, `extras_final.py ecgfm` |
+| Suppl. Table S12 | `handheld_ppv`, `handheld_af_vs_all`, `handheld_net_benefit`, `calibration`, `calibration_per_seed` | `extras_final.py handheld`, `calibration` |
+| Suppl. Table S14, Suppl. Fig. S2 | `calibration`, `calibration_curves`, `calibration_per_seed`, `recalibration` | `extras_final.py calibration`, `recal` |
+| Suppl. Table S21 | `hospital_diagnoses`, `hospital_diagnoses_per_seed` | `hospital_final.py` |
+| Suppl. Table S23 | `handheld_tasks`, `handheld_af_vs_all` | `extras_final.py tasks`, `handheld` |
+| Suppl. Table S24 | `design_inner`, `design_choice` | `design_selection.py fit`, `choose` |
+| Suppl. Table S25, Suppl. Fig. S3 | `experiments/stats/cohorts`, `experiments/stats/cohort_flow`, `ptbxl_flow` | `cohort_tables.py`, `describe_data.py` |
 | Suppl. Note 1 | `handheld_duplicates`, `experiments/stats/rpeak_segmentation_summary`, `experiments/stats/wearable_icentia_fidelity_fixfs` | `extras_final.py handheld`, `rpeak_segmentation_diagnostic.py`, `wearable_icentia_fidelity.py` |
 | Methods | `ondevice`, `averaged_beat_training_counts`, `af_codes_by_hospital`, `rr_failures_external` | `extras_final.py ondevice`; `describe_data.py` |
 | Not reported in the paper | `subgroups_beat`, `subgroups_beat_per_finding` (subgroups of the averaged beat), `strip_rr_groups` (group means of the strip with RR intervals), `handheld_af_vs_all_fp_classes` (false alarms by class of recording), `first30k` (properties of the first 30,000 records of the record list) | `extras_final.py subgroups_beat`, `handheld`; `supplement_final.py strip_rr`; `describe_data.py` |

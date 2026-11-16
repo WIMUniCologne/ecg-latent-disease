@@ -364,7 +364,7 @@ def figS3():
             [f"−{fmt(drawn3 - us3)}: non-finite\nor flat lead I", f"−{fmt(us3 - n_trained(us3))}: held out"]),
            ("Lead-set encoders", [f"{fmt(ls)} drawn from\nthe usable strips", f"{fmt(n_trained(ls))} trained"],
             [f"−{fmt(ls - n_trained(ls))}: held out"]),
-           ("Controlled-comparison encoders", [f"the {fmt(pair.n_source)} of the\nlead-set corpus", f"{fmt(pair.n_records)} usable", f"{fmt(pair.n_train)} trained"],
+           ("Controlled-comparison\nencoders", [f"the {fmt(pair.n_source)} of the\nlead-set corpus", f"{fmt(pair.n_records)} usable", f"{fmt(pair.n_train)} trained"],
             [f"−{fmt(pair.n_source - pair.n_records)}: no clean\naveraged beat", f"−{fmt(pair.n_records - pair.n_train)}: held out"]),
            ("Patch encoder", [f"Icentia11k, 40 patients\n{fmt(ic)} strips", f"{fmt(n_trained(ic))} trained"], [f"−{fmt(ic - n_trained(ic))}: held out (5%)"])]
     bottom = [("Handheld device", [f"PhysioNet/CinC 2017\n{fmt(h0)} recordings", f"{fmt(h1)} valid", f"{fmt(h2)} for atrial fibrillation\nvs normal ({fmt(ha)} with atrial fibrillation)"],
