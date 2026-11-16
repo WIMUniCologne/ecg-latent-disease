@@ -11,7 +11,7 @@ Information Systems, University of Cologne).
 
 Cardiologists read many findings from 12-lead electrocardiograms, whereas consumer devices
 record one lead and classify only its rhythm. How much diagnostic information does this single
-lead carry? We pre-train neural networks with self-supervised learning on unlabelled
+lead carry? We pre-train neural networks with self-supervised learning on unlabeled
 MIMIC-IV-ECG recordings, keep them frozen, and read each finding from their representation with
 one logistic regression. The main encoder is a masked autoencoder on the whole ten-second strip
 (2,560 samples at 256 Hz) of one, two or twelve leads; an autoencoder on the averaged heartbeat,

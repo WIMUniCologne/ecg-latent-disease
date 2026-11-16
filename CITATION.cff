@@ -6,7 +6,7 @@ title: >-
   Lead I alone carries much of what physicians read on a 12-lead ECG (code)
 abstract: >-
   Code, aggregated results and figures for a study of ECG encoders pre-trained with
-  self-supervised learning on unlabelled MIMIC-IV-ECG recordings and read out frozen
+  self-supervised learning on unlabeled MIMIC-IV-ECG recordings and read out frozen
   with one logistic regression per finding. Strip encoders of one, two and twelve
   leads are evaluated against 13 physician-annotated findings in two external
   twelve-lead cohorts (Chapman-Shaoxing and Ningbo; PTB-XL), on atrial fibrillation
