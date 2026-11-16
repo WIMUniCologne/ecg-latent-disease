@@ -31,13 +31,13 @@ representation. The waveforms and devices are drawn for illustration.*
 
 | Mean AUC over the findings | Lead I | Leads I and II | Twelve leads |
 |---|---|---|---|
-| Chinese cohort, 13 findings (Chapman–Shaoxing and Ningbo) | 0.883 | 0.928 | 0.940 |
+| Shaoxing–Ningbo cohort, 13 findings (Chapman–Shaoxing and Ningbo database) | 0.883 | 0.928 | 0.940 |
 | PTB-XL, 12 findings (Germany) | 0.838 | 0.886 | 0.897 |
 
 - **Atrial fibrillation on a handheld device** (lead I): RR intervals 0.977, strip 0.971, both
   combined 0.987.
 - **Cost of a broad reading:** at a sensitivity of 0.90 for every finding, lead-I classifiers
-  flagged 82% of the recordings of the Chinese cohort that had none of the 13 findings.
+  flagged 82% of the recordings of the Shaoxing–Ningbo cohort that had none of the 13 findings.
 
 Values are means over training runs. Confidence intervals and every comparison are in
 `results/paper/` (see [Where each result lives](#where-each-result-lives)).
@@ -100,7 +100,7 @@ plainer ones:
 
 | In the code and the result files | In the paper |
 |---|---|
-| external cohort, `ext`; hospitals `chapman` and `ningbo` | Chinese cohort (Chapman–Shaoxing and Ningbo); hospitals Shaoxing and Ningbo |
+| external cohort, `ext`; hospitals `chapman` and `ningbo` | Shaoxing–Ningbo cohort (Chapman–Shaoxing and Ningbo database); hospitals Shaoxing and Ningbo |
 | second external cohort, `ptbxl` | PTB-XL |
 | handheld encoder, lead-I strip encoder on 300,000 drawn records; `strip` in the result files of the handheld device | full-corpus encoder |
 | `strip_icentia` | patch encoder |
@@ -140,7 +140,7 @@ plainer ones:
 | `experiments/twolead_strip_arm.py`, `experiments/ssl_contrastive_strip.py` | strip encoders of one, two and twelve leads at 1,024 samples; the contrastive objective |
 | `experiments/ablation_final.py` | the same encoder pre-trained on strips and on their averaged beats (Supplementary Table S15) |
 | `experiments/pair_v5_final.py` | lead I paired with the chest lead V5 (Supplementary Table S5) |
-| `experiments/encode_external.py` | representations of the Chinese cohort from the averaged-beat encoders and the 1,024-sample strip encoders |
+| `experiments/encode_external.py` | representations of the Shaoxing–Ningbo cohort from the averaged-beat encoders and the 1,024-sample strip encoders |
 
 **Read-outs and statistics** (`experiments/`)
 
@@ -149,12 +149,12 @@ plainer ones:
 | `common.py` | settings shared by the analyses: one BLAS thread, seeds, groups of findings, the out-of-fold read-out |
 | `wearable_oof.py`, `eval_pipeline.py`, `oof_stats.py` | the out-of-fold logistic read-out and its shuffled control; DeLong CIs and paired tests; the hospital labels; the noise analysis |
 | `wearable_harness.py`, `wearable_w2_full.py` | frozen encoders, file naming, the inputs of the external cohort |
-| `leadset_final.py` | the lead-set comparison in the Chinese cohort (Table 1, Fig. 2a) |
+| `leadset_final.py` | the lead-set comparison in the Shaoxing–Ningbo cohort (Table 1, Fig. 2a) |
 | `ptbxl_final.py` | the lead-set comparison in PTB-XL (Table 2, Supplementary Tables S6 to S8) |
 | `handheld_final.py`, `cinc2017_features.py`, `rr_intervals.py` | atrial fibrillation on the handheld device (Table 3, Fig. 3) |
 | `hospital_final.py`, `recorded_noise.py` | hospital diagnoses and recorded noise (Fig. 5) |
 | `comparators_final.py`, `e2b_ecgfm.py` | the supervised networks (residual and compact network, fine-tuned strip encoder) and ECG-FM |
-| `secondary_final.py`, `supplement_final.py`, `extras_final.py` | the further analyses of the Chinese cohort and the handheld device, and the false alarms of a broad reading (Fig. 4) |
+| `secondary_final.py`, `supplement_final.py`, `extras_final.py` | the further analyses of the Shaoxing–Ningbo cohort and the handheld device, and the false alarms of a broad reading (Fig. 4) |
 | `describe_data.py`, `cohort_tables.py`, `pairing_corpus_count.py` | counts of the data and cohorts |
 | `perlead_ranking.py`, `beat_latents.py`, `seed_stability_report.py` | ranking of the twelve single-lead averaged-beat encoders (Supplementary Table S17) |
 | `c2_published_encode.py` | representations from the published averaged-beat encoder of Friedman et al. (Supplementary Table S16) |
@@ -235,7 +235,7 @@ MIMIC-IV-ECG need credentialed access and a signed data use agreement.
 |---|---|---|---|
 | MIMIC-IV-ECG | 1.0 | self-supervised pre-training; the hospital cohort | https://physionet.org/content/mimic-iv-ecg/ |
 | MIMIC-IV (`hosp` module) | 3.1 | age, sex, race, admissions and the ICD-coded hospital diagnoses | https://physionet.org/content/mimiciv/ |
-| Chapman–Shaoxing and Ningbo (`ecg-arrhythmia`) | 1.0.0 | the Chinese cohort: 13 findings, one to twelve leads | https://physionet.org/content/ecg-arrhythmia/ |
+| Chapman–Shaoxing and Ningbo (`ecg-arrhythmia`) | 1.0.0 | the Shaoxing–Ningbo cohort: 13 findings, one to twelve leads | https://physionet.org/content/ecg-arrhythmia/ |
 | PTB-XL | 1.0.3 | the PTB-XL cohort: signals, patients, folds | https://physionet.org/content/ptb-xl/ |
 | PhysioNet/CinC Challenge 2021 (`training/ptb-xl`) | 1.0.3 | the SNOMED-CT codes of the PTB-XL statements | https://physionet.org/content/challenge-2021/ |
 | PhysioNet/CinC Challenge 2017 | 1.0.0 | handheld single-lead atrial fibrillation | https://physionet.org/content/challenge-2017/ |
@@ -319,7 +319,7 @@ shows what changed. Each script documents its inputs, options and outputs in its
 On the hardware above, the whole run takes about two and a half to three days: caches about 9 h,
 pre-training about 26 to 30 h (most of it the strip encoders, about 70 GPU hours spread over the
 four GPUs), the choice of the strip design about 3 h, the supervised networks and the
-analyses of the Chinese cohort about 7 h each, the hospital analyses about 5 h and the rest a
+analyses of the Shaoxing–Ningbo cohort about 7 h each, the hospital analyses about 5 h and the rest a
 few hours. The cache directory of the paper's run holds about 125 GB.
 
 ```mermaid
@@ -348,7 +348,7 @@ The stages, in order:
    (`design_candidates.py train`), the full-corpus, corpus-size and patch encoders
    (`pretrain_strip_encoders.py`), the controlled comparison (`ablation_final.py train`) and lead I
    with V5 (`pair_v5_final.py train`). Checkpoints are written to `runs/`.
-4. **design**: representations of the Chinese cohort (`encode_external.py`, `design_candidates.py
+4. **design**: representations of the Shaoxing–Ningbo cohort (`encode_external.py`, `design_candidates.py
    encode`) and the choice of the strip design by nested cross-validation (`design_selection.py`).
 5. **handheld**, **external**, **hospital**, **ptbxl**: the read-outs and statistics of each cohort
    (see the table below).

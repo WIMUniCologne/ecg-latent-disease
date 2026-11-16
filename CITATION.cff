@@ -99,7 +99,7 @@ references:
         given-names: Huimin
     year: 2022
     doi: 10.13026/wgex-er52
-    notes: PhysioNet ecg-arrhythmia (Chapman-Shaoxing and Ningbo); the Chinese cohort of 13 findings.
+    notes: PhysioNet ecg-arrhythmia (Chapman-Shaoxing and Ningbo); the Shaoxing-Ningbo cohort of 13 findings.
   - type: article
     title: "PTB-XL, a large publicly available electrocardiography dataset"
     authors:

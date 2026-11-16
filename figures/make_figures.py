@@ -11,15 +11,15 @@ figures are written next to this script, as PNG (300 dpi) and PDF, named after t
 paper:
 
   fig1   Fig. 1   study overview (schematic; the waveforms are drawn, not data)
-  fig2   Fig. 2   lead sets: a every finding of the Chinese cohort, b label efficiency
+  fig2   Fig. 2   lead sets: a every finding of the Shaoxing–Ningbo cohort, b label efficiency
   fig3   Fig. 3   atrial fibrillation on the handheld device: a ROC curves, b size of the pre-training corpus
-  fig4   Fig. 4   a broad reading in the Chinese cohort: a alarms against sensitivity, b specificity per finding
+  fig4   Fig. 4   a broad reading in the Shaoxing–Ningbo cohort: a alarms against sensitivity, b specificity per finding
   fig5   Fig. 5   recorded noise: a hospital diagnoses, b the 13 findings
   figS1  Fig. S1  the lead-I strip against the 12-lead averaged beat with heart rate, by finding
-  figS2  Fig. S2  calibration curves of the strips, Chinese cohort
+  figS2  Fig. S2  calibration curves of the strips, Shaoxing–Ningbo cohort
   figS3  Fig. S3  flow of recordings
 
-Names in the code and in the paper: the external cohort of the code is the Chinese cohort of the paper
+Names in the code and in the paper: the external cohort of the code is the Shaoxing–Ningbo cohort of the paper
 (Chapman-Shaoxing and Ningbo), the strip encoder of the handheld analyses is the full-corpus encoder.
 
 Style, colors and the drawing helpers of the overview are in figure_base.py.
@@ -134,7 +134,7 @@ def fig1():
 
 # --------------------------------------------------------------------------- #
 def fig2():
-    """Lead sets in the Chinese cohort: a every finding with lead I, leads I and II and twelve leads; b label efficiency."""
+    """Lead sets in the Shaoxing–Ningbo cohort: a every finding with lead I, leads I and II and twelve leads; b label efficiency."""
     a_ = res("leadset_auc.csv")
     m = a_[a_.arm == "strip"].groupby(["finding", "lead_set"]).auc.mean().unstack()
     m = m.sort_values(1)
@@ -233,7 +233,7 @@ def fig3():
 
 
 def fig4():
-    """A broad reading in the Chinese cohort: a share of the recordings without any finding that at least one
+    """A broad reading in the Shaoxing–Ningbo cohort: a share of the recordings without any finding that at least one
     classifier flags, against the mean sensitivity, with the stars of the sensitivity of 0.90 named; b specificity of
     each finding at a sensitivity of 0.90 with lead I, the lowest at the top."""
     fr = res("alarms_frontier.csv").groupby(["lead_set", "specificity_target"])[["share_any_no_finding", "mean_sensitivity"]].mean()
@@ -310,7 +310,7 @@ def figS1():
 
 
 def figS2():
-    """Calibration curves of the strip classifiers in the Chinese cohort, one panel per finding."""
+    """Calibration curves of the strip classifiers in the Shaoxing–Ningbo cohort, one panel per finding."""
     cc = res("calibration_curves.csv").groupby(["lead_set", "finding", "bin"])[["predicted", "observed"]].mean().reset_index()
     fig, axes = plt.subplots(4, 5, figsize=(W_FULL, 5.2), sharex=False, sharey=False)
     short = {"supraventricular_tachycardia": "supraventricular\ntachycardia", "atrial_premature_beats": "atrial premature\nbeats",
@@ -369,7 +369,7 @@ def figS3():
            ("Patch encoder", [f"Icentia11k, 40 patients\n{fmt(ic)} strips", f"{fmt(n_trained(ic))} trained"], [f"−{fmt(ic - n_trained(ic))}: held out (5%)"])]
     bottom = [("Handheld device", [f"PhysioNet/CinC 2017\n{fmt(h0)} recordings", f"{fmt(h1)} valid", f"{fmt(h2)} for atrial fibrillation\nvs normal ({fmt(ha)} with atrial fibrillation)"],
                [f"−{fmt(h0 - h1)}: no valid averaged beat", f"−{fmt(ho + hn)}: other rhythm ({fmt(ho)})\nor too noisy ({fmt(hn)})"]),
-              ("Chinese cohort", [f"Chapman–Shaoxing and Ningbo\n{fmt(e0)} recordings", f"{fmt(e1)} patients,\none recording each, 13 findings"],
+              ("Shaoxing–Ningbo cohort", [f"Chapman–Shaoxing and Ningbo\n{fmt(e0)} recordings", f"{fmt(e1)} patients,\none recording each, 13 findings"],
                [f"−{fmt(e0 - e1)}: no detected beat\nor no valid strip"]),
               ("PTB-XL", [f"{fmt(p0)} recordings", f"{fmt(p1)} with labels", f"{fmt(p2)} patients,\n12 findings tested"],
                [f"−{fmt(p0 - p1)}: no Challenge label", f"−{fmt(p1 - p2)}: later recordings\nof the same patient"]),
